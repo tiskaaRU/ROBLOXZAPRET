@@ -1,5 +1,5 @@
 import React from 'react';
-import { SITE_CONFIG } from '../constants';
+import { SITE_CONFIG } from '@/lib/constants';
 
 export const SiteClosedScreen: React.FC = () => {
     const { reason, maintenanceEndTime } = SITE_CONFIG;

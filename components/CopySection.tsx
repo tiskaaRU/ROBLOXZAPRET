@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
-import { ROBLOX_DOMAINS } from '../constants';
+import { ROBLOX_DOMAINS } from '@/lib/constants';
 
 export const CopySection: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -24,14 +24,13 @@ export const CopySection: React.FC = () => {
           Domains List
         </div>
       </div>
-      
+
       <button
         onClick={handleCopy}
-        className={`w-full py-4 px-6 rounded-2xl font-bold transition-all flex items-center justify-center gap-3 border shadow-sm ${
-          copied 
-            ? 'bg-green-50 border-green-200 text-green-600' 
+        className={`w-full py-4 px-6 rounded-2xl font-bold transition-all flex items-center justify-center gap-3 border shadow-sm ${copied
+            ? 'bg-green-50 border-green-200 text-green-600'
             : 'bg-slate-900 border-slate-800 text-white hover:bg-slate-800 active:scale-[0.98]'
-        }`}
+          }`}
       >
         {copied ? (
           <>
