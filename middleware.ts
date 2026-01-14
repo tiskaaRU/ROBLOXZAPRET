@@ -4,13 +4,16 @@ import type { NextRequest } from 'next/server';
 export function middleware(req: NextRequest) {
     const country = req.geo?.country || 'UNKNOWN';
 
-    // Geo-blocking for Ukraine (UA)
-    if (country === 'UA') {
+    // Geo-blocking for Ukraine (UA), Germany (DE), United States (US)
+    const blockedCountries = ['UA', 'DE', 'US'];
+
+    if (blockedCountries.includes(country)) {
         // Prevent infinite redirect loop
         if (!req.nextUrl.pathname.startsWith('/access-denied')) {
             const url = req.nextUrl.clone();
             url.pathname = '/access-denied';
             url.searchParams.set('reason', 'geo');
+            url.searchParams.set('country', country);
             console.log(`Blocking access from ${country}`);
             return NextResponse.rewrite(url);
         }

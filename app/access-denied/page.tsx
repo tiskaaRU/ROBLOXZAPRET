@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 export default function AccessDenied() {
     const searchParams = useSearchParams();
     const reason = searchParams.get('reason');
+    const country = searchParams.get('country');
     const [errorId, setErrorId] = useState('');
 
     useEffect(() => {
@@ -18,12 +19,42 @@ export default function AccessDenied() {
     const getContent = () => {
         switch (reason) {
             case 'geo':
+                // Localized messages based on country
+                if (country === 'DE') {
+                    return {
+                        icon: <Ban size={64} className="text-red-500" />,
+                        title: 'Zugriff verweigert',
+                        message: 'Diese Website ist in Ihrem Land (Deutschland) nach Entscheidung des Eigentümers nicht verfügbar.',
+                        color: 'text-red-600',
+                        lang: 'de'
+                    };
+                }
+                if (country === 'US') {
+                    return {
+                        icon: <Ban size={64} className="text-red-500" />,
+                        title: 'Access Denied',
+                        message: 'This website is not available in your country (United States) by decision of the site owner.',
+                        color: 'text-red-600',
+                        lang: 'en'
+                    };
+                }
+                if (country === 'UA') {
+                    return {
+                        icon: <Ban size={64} className="text-red-500" />,
+                        title: 'Доступ обмежено',
+                        message: 'Цей веб-сайт недоступний у вашій країні (Україна) за рішенням власника сайту.',
+                        color: 'text-red-600',
+                        lang: 'uk'
+                    };
+                }
+                // Fallback for other blocked countries (if any added later)
                 return {
                     icon: <Ban size={64} className="text-red-500" />,
-                    title: 'Доступ ограничен',
-                    message: 'Сайт недоступен в вашей стране (Украина) по решению владельца сайта.',
+                    title: 'Access Denied / Доступ ограничен',
+                    message: 'Access to this website is restricted in your region. / Доступ к сайту ограничен в вашем регионе.',
                     color: 'text-red-600'
                 };
+
             case '429':
                 return {
                     icon: <AlertTriangle size={64} className="text-amber-500" />,
