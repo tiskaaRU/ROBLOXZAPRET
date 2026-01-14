@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
-    const country = req.geo?.country || 'UNKNOWN';
+    const country = (req as any).geo?.country || 'UNKNOWN';
 
     // Geo-blocking for Ukraine (UA), Germany (DE), United States (US)
     const blockedCountries = ['UA', 'DE', 'US'];
