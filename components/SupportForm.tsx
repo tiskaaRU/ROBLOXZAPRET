@@ -141,14 +141,25 @@ export function SupportForm() {
 
                     <div className="space-y-2">
                         <label htmlFor="message" className="text-sm font-bold text-slate-700 ml-1">Сообщение</label>
-                        <textarea
-                            name="message"
-                            id="message"
-                            required
-                            rows={4}
-                            placeholder="Опишите вашу ситуацию подробно..."
-                            className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all font-medium text-slate-800 placeholder:text-slate-400 resize-none"
-                        ></textarea>
+                        <div className="relative">
+                            <textarea
+                                name="message"
+                                id="message"
+                                required
+                                rows={4}
+                                maxLength={400}
+                                placeholder="Опишите вашу ситуацию подробно..."
+                                className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white outline-none transition-all font-medium text-slate-800 placeholder:text-slate-400 resize-none"
+                                onChange={(e) => {
+                                    const len = e.target.value.length;
+                                    const counter = document.getElementById('char-counter');
+                                    if (counter) counter.innerText = `${len}/400`;
+                                }}
+                            ></textarea>
+                            <div className="absolute right-4 bottom-4 text-xs font-bold text-slate-400 pointer-events-none" id="char-counter">
+                                0/400
+                            </div>
+                        </div>
                     </div>
 
                     {/* Captcha */}

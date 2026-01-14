@@ -10,6 +10,14 @@ export async function POST(req: NextRequest) {
         const body = await req.json();
         const { name, email, type, message, token } = body;
 
+        // 0. Validate Message Length
+        if (!message || message.length > 400) {
+            return NextResponse.json(
+                { error: 'Сообщение слишком длинное (макс. 400 символов).' },
+                { status: 400 }
+            );
+        }
+
         // 1. Rate Limiting
         const rateLimitKey = `ratelimit:support:${ip}`;
         const lastRequest = await kv.get<number>(rateLimitKey);
