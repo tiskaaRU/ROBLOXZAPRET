@@ -17,31 +17,65 @@ export const RobloxVersion: React.FC = () => {
         setLoading(true);
         setError(null);
         try {
-            // Using allorigins.win /get endpoint for better CORS support
-            const proxyUrl = 'https://api.allorigins.win/get?url=';
+            // Direct fetch from Roblox CDN (Cross-Origin checks usually allowed for CDN)
+            // If CORS fails, we might need a no-cors mode, but that makes body opaque.
+            // setup.rbxcdn.com usually supports standard GETs.
 
             const [playerRes, studioRes] = await Promise.all([
-                fetch(proxyUrl + encodeURIComponent('https://clientsettings.roblox.com/v2/client-version/WindowsPlayer')),
-                fetch(proxyUrl + encodeURIComponent('https://clientsettings.roblox.com/v2/client-version/WindowsStudio'))
+                fetch('https://setup.rbxcdn.com/version'),
+                fetch('https://setup.rbxcdn.com/versionStudio')
             ]);
 
             if (!playerRes.ok || !studioRes.ok) {
-                throw new Error('Не удалось получить данные с серверов Roblox');
+                throw new Error('Не удалось получить данные с CDN Roblox');
             }
 
-            const playerWrapper = await playerRes.json();
-            const studioWrapper = await studioRes.json();
+            const playerVersion = await playerRes.text();
+            const studioVersion = await studioRes.text();
 
-            // allorigins /get returns the actual content in a 'contents' string field
-            const playerJson = JSON.parse(playerWrapper.contents);
-            const studioJson = JSON.parse(studioWrapper.contents);
+            setPlayerData({
+                version: playerVersion.trim(),
+                clientVersionUpload: playerVersion.trim(), // CDN only provides version hash
+                bootstrapperVersion: playerVersion.trim()
+            });
 
-            setPlayerData(playerJson);
-            setStudioData(studioJson);
+            setStudioData({
+                version: studioVersion.trim(),
+                clientVersionUpload: studioVersion.trim(),
+                bootstrapperVersion: studioVersion.trim()
+            });
+
             setLastChecked(new Date());
         } catch (err) {
-            setError('Ошибка подключения к API Roblox. Попробуйте позже.');
-            console.error(err);
+            console.error('Direct CDN check failed, falling back to proxy...', err);
+            // Fallback to proxy if direct check fails (e.g. strict CORS settings)
+            try {
+                const proxyUrl = 'https://api.allorigins.win/get?url=';
+                const [playerRes, studioRes] = await Promise.all([
+                    fetch(proxyUrl + encodeURIComponent('https://setup.rbxcdn.com/version')),
+                    fetch(proxyUrl + encodeURIComponent('https://setup.rbxcdn.com/versionStudio'))
+                ]);
+
+                const playerWrapper = await playerRes.json();
+                const studioWrapper = await studioRes.json();
+
+                setPlayerData({
+                    version: playerWrapper.contents?.trim() || 'Error',
+                    clientVersionUpload: '',
+                    bootstrapperVersion: ''
+                });
+
+                setStudioData({
+                    version: studioWrapper.contents?.trim() || 'Error',
+                    clientVersionUpload: '',
+                    bootstrapperVersion: ''
+                });
+                setLastChecked(new Date());
+
+            } catch (fallbackErr) {
+                setError('Не удалось проверить версии. Возможно, проблема с подключением.');
+                console.error(fallbackErr);
+            }
         } finally {
             setLoading(false);
         }
