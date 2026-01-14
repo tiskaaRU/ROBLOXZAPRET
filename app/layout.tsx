@@ -6,12 +6,13 @@ export const metadata: Metadata = {
         default: 'Roblox Bypass Hub — Обход блокировки Роблокс и Дискорд в России 2026',
         template: '%s | Roblox Bypass Hub'
     },
-    description: 'Бесплатные инструкции по обходу блокировки Roblox, Discord и YouTube в России. Скачать Zapret, ByeByeDPI. Настройка VPN для голосового чата. Работающие методы 2026 года.',
+    description: 'Бесплатные инструкции по обходу блокировки Roblox, Discord и YouTube в России на ПК, iOS и Android. Скачать Zapret, ByeByeDPI. Настройка VPN для голосового чата.',
     keywords: [
         'roblox', 'роблокс', 'обход блокировки', 'zapret', 'byebyedpi', 'россия', 'vpn', 'голосовой чат',
         'разблокировать роблокс', 'discord fix', 'дискорд не работает', 'ютуб замедление', 'youtube fix',
         'гудбай дпи', 'goodbyedpi', 'антизапрет', 'как зайти в роблокс', 'не работает роблокс', 'roblox ошибка',
-        'voice chat roblox russia', 'roblox vng', 'warp', 'cloudflare'
+        'voice chat roblox russia', 'roblox vng', 'warp', 'cloudflare', 'roblox ios', 'roblox android',
+        'роблокс на айфоне', 'роблокс на телефоне', 'gearup booster', 'обход на телефоне'
     ],
     authors: [{ name: 'BADAZZRED' }],
     creator: 'BADAZZRED',
