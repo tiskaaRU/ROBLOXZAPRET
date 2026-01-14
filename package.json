@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.4.1",
+    "@vercel/analytics": "^1.6.1",
     "@vercel/kv": "^2.0.0",
     "lucide-react": "^0.562.0",
     "next": "^15.0.0",

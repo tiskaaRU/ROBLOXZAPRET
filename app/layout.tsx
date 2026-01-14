@@ -46,6 +46,10 @@ export const viewport = {
     initialScale: 1,
 };
 
+import { Analytics } from "@vercel/analytics/react"
+
+// ... imports remain the same ...
+
 export default function RootLayout({
     children,
 }: {
@@ -55,6 +59,7 @@ export default function RootLayout({
         <html lang="ru">
             <body className="text-slate-900 antialiased selection:bg-red-100 selection:text-red-600">
                 {children}
+                <Analytics />
             </body>
         </html>
     );
