@@ -22,7 +22,8 @@ export function SupportForm() {
         setStatus('loading');
         setErrorMessage('');
 
-        const formData = new FormData(e.currentTarget);
+        const form = e.currentTarget;
+        const formData = new FormData(form);
         const data = {
             name: formData.get('name'),
             email: formData.get('email'),
@@ -45,7 +46,7 @@ export function SupportForm() {
             }
 
             setStatus('success');
-            e.currentTarget.reset();
+            form.reset();
             turnstileRef.current?.reset();
         } catch (error) {
             console.error(error);

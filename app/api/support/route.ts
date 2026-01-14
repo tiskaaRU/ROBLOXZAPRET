@@ -47,20 +47,26 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // 3. Save to KV (Redis List)
+        // 3. Save to KV (Individual Keys with TTL for Auto-Delete)
+        const ticketId = Date.now().toString(36) + Math.random().toString(36).substr(2);
         const ticket = {
-            id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+            id: ticketId,
             name,
             email,
             type,
             message,
-            ip, // Optional: store IP for banning if needed
+            ip,
             createdAt: new Date().toISOString(),
             status: 'new'
         };
 
-        // RPUSH adds to the tail of the list
-        await kv.rpush('support_tickets', ticket);
+        // Key format: ticket:TIMESTAMP:ID
+        // This allows easy sorting and finding
+        const key = `ticket:${Date.now()}:${ticketId}`;
+
+        // Save with 7 days expiration (604800 seconds)
+        // This ensures data automatically deletes itself after a week!
+        await kv.set(key, ticket, { ex: 604800 });
 
         // Update rate limit
         await kv.set(rateLimitKey, Date.now(), { ex: 86400 });

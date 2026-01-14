@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Loader2, RefreshCw, LogOut, ShieldAlert, Terminal, Lock } from 'lucide-react';
+import { Loader2, RefreshCw, LogOut, ShieldAlert, Terminal, Lock, Mail, Trash2, Search, X, User, Calendar, MessageSquare } from 'lucide-react';
 
 export default function AdminPage() {
     const [isAuthorized, setIsAuthorized] = useState(false);
@@ -9,6 +9,10 @@ export default function AdminPage() {
     const [loading, setLoading] = useState(false);
     const [creds, setCreds] = useState({ user: '', pass: '' });
     const [error, setError] = useState('');
+    const [search, setSearch] = useState('');
+
+    // Selected ticket for "Mail View"
+    const [selectedTicket, setSelectedTicket] = useState<any | null>(null);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,12 +30,11 @@ export default function AdminPage() {
                 const data = await res.json();
                 setTickets(data);
                 setIsAuthorized(true);
-                // Save session minimally (just in memory for security as requested, or localStorage if convenient. Security preferred.)
             } else {
-                setError('ACCESS DENIED: Invalid Credentials');
+                setError('ДОСТУП ЗАПРЕЩЕН: Неверные данные');
             }
         } catch (err) {
-            setError('Connection Failure');
+            setError('Ошибка соединения');
         } finally {
             setLoading(false);
         }
@@ -46,12 +49,41 @@ export default function AdminPage() {
             });
             const data = await res.json();
             setTickets(data);
+            setSelectedTicket(null);
         } catch (err) {
             console.error(err);
         } finally {
             setLoading(false);
         }
     };
+
+    const clearAllTickets = async () => {
+        if (!window.confirm('Вы уверены? Это действие удалит ВСЕ письма НАВСЕГДА. Отменить нельзя.')) return;
+
+        setLoading(true);
+        const authStr = btoa(`${creds.user}:${creds.pass}`);
+        try {
+            const res = await fetch('/api/admin/tickets', {
+                method: 'DELETE',
+                headers: { 'Authorization': `Basic ${authStr}` }
+            });
+            if (res.ok) {
+                setTickets([]);
+                setSelectedTicket(null);
+                alert('База данных очищена.');
+            }
+        } catch (err) {
+            alert('Ошибка при удалении');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const filteredTickets = tickets.filter(t =>
+        t?.name?.toLowerCase().includes(search.toLowerCase()) ||
+        t?.email?.toLowerCase().includes(search.toLowerCase()) ||
+        t?.message?.toLowerCase().includes(search.toLowerCase())
+    );
 
     if (!isAuthorized) {
         return (
@@ -62,7 +94,6 @@ export default function AdminPage() {
 
                 {/* Vista Login Window */}
                 <div className="relative z-10 w-full max-w-md bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl overflow-hidden ring-1 ring-white/10">
-                    {/* Glass Header */}
                     <div className="bg-gradient-to-b from-white/20 to-transparent p-4 border-b border-white/10 flex items-center gap-2">
                         <Lock className="text-white/80 w-4 h-4" />
                         <span className="text-white/90 font-bold text-shadow-sm">System Core Authorization</span>
@@ -73,13 +104,13 @@ export default function AdminPage() {
                             <ShieldAlert className="w-12 h-12 text-white/80" />
                         </div>
 
-                        <h2 className="text-2xl text-white font-medium mb-6 drop-shadow-md">Administrator Login</h2>
+                        <h2 className="text-2xl text-white font-medium mb-6 drop-shadow-md">Вход Администратора</h2>
 
                         <form onSubmit={handleLogin} className="w-full space-y-4">
                             <div className="space-y-1">
                                 <input
                                     type="text"
-                                    placeholder="Username"
+                                    placeholder="Имя пользователя"
                                     className="w-full bg-white/90 border border-slate-400 rounded-sm px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 shadow-inner placeholder:text-slate-500"
                                     value={creds.user}
                                     onChange={e => setCreds({ ...creds, user: e.target.value })}
@@ -88,7 +119,7 @@ export default function AdminPage() {
                             <div className="space-y-1">
                                 <input
                                     type="password"
-                                    placeholder="Password"
+                                    placeholder="Пароль"
                                     className="w-full bg-white/90 border border-slate-400 rounded-sm px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 shadow-inner placeholder:text-slate-500"
                                     value={creds.pass}
                                     onChange={e => setCreds({ ...creds, pass: e.target.value })}
@@ -108,14 +139,11 @@ export default function AdminPage() {
                             >
                                 <div className="flex items-center justify-center gap-2">
                                     {loading && <Loader2 className="w-4 h-4 animate-spin text-white" />}
-                                    <span className="text-white font-bold drop-shadow-md">Log On</span>
+                                    <span className="text-white font-bold drop-shadow-md">Войти</span>
                                     <div className="absolute right-2 text-white/50 group-hover:text-white transition-colors">→</div>
                                 </div>
                             </button>
                         </form>
-                    </div>
-                    <div className="bg-black/30 p-3 text-center">
-                        <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold">Secure Access V7.0</p>
                     </div>
                 </div>
             </div>
@@ -124,8 +152,8 @@ export default function AdminPage() {
 
     return (
         <div className="min-h-screen bg-[#2c3e50] font-sans text-slate-100 flex flex-col h-screen overflow-hidden">
-            {/* Aero Taskbar / Header */}
-            <header className="bg-black/80 backdrop-blur-md h-12 border-b border-white/10 flex items-center justify-between px-4 z-50 shadow-lg">
+            {/* Aero Taskbar */}
+            <header className="bg-black/80 backdrop-blur-md h-12 border-b border-white/10 flex items-center justify-between px-4 z-50 shadow-lg shrink-0">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-cyan-600 rounded-full flex items-center justify-center shadow-lg border border-white/20">
                         <Terminal size={16} className="text-white" />
@@ -133,112 +161,150 @@ export default function AdminPage() {
                     <span className="font-bold text-white tracking-wide text-shadow">System Core <span className="text-blue-400">V7</span> Dashboard</span>
                 </div>
                 <div className="flex items-center gap-4">
-                    <button onClick={refreshTickets} className="p-2 hover:bg-white/10 rounded-full transition-colors" title="Refresh Database">
+                    <button onClick={clearAllTickets} className="px-3 py-1 bg-red-600 hover:bg-red-500 rounded text-xs font-bold border border-red-400/50 text-white flex items-center gap-2 transition-all">
+                        <Trash2 size={14} /> ОЧИСТИТЬ ВСЕ
+                    </button>
+                    <div className="w-px h-6 bg-white/20" />
+                    <button onClick={refreshTickets} className="p-2 hover:bg-white/10 rounded-full transition-colors" title="Обновить">
                         <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
                     </button>
-                    <button onClick={() => setIsAuthorized(false)} className="bg-red-600/80 hover:bg-red-500 px-3 py-1 rounded text-xs font-bold border border-red-400/50 shadow-lg transition-all">
-                        SHUTDOWN
+                    <button onClick={() => setIsAuthorized(false)} className="bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded text-xs font-bold border border-slate-500 shadow-lg transition-all">
+                        ВЫХОД
                     </button>
                 </div>
             </header>
 
-            {/* Main Content Areas */}
-            <main className="flex-1 p-6 overflow-auto bg-[url('https://img.freepik.com/free-vector/abstract-digital-grid-background_53876-116812.jpg')] bg-cover bg-fixed">
-                <div className="max-w-7xl mx-auto space-y-6">
-                    {/* Status Bar */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-xl">
-                            <h3 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Database Config</h3>
-                            <p className="text-2xl font-mono text-emerald-400">Redis List (KV)</p>
-                            <p className="text-xs text-slate-500 mt-2">Optimized for high volume</p>
-                        </div>
-                        <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-xl">
-                            <h3 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Total Tickets</h3>
+            {/* Main Content - Windows Mail Style Layout */}
+            <main className="flex-1 p-4 md:p-6 overflow-hidden bg-[url('https://img.freepik.com/free-vector/abstract-digital-grid-background_53876-116812.jpg')] bg-cover bg-fixed flex flex-col">
+
+                {/* Metrics Bar */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 shrink-0">
+                    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4 shadow-xl flex items-center justify-between">
+                        <div>
+                            <h3 className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Всего писем</h3>
                             <p className="text-2xl font-mono text-blue-400">{tickets.length}</p>
-                            <p className="text-xs text-slate-500 mt-2">Stored in secure cloud</p>
                         </div>
-                        <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-xl">
-                            <h3 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Security Status</h3>
-                            <p className="text-2xl font-mono text-green-400">ENCRYPTED</p>
-                            <p className="text-xs text-slate-500 mt-2">Turnstile Active</p>
+                        <Mail className="text-blue-500/50 w-8 h-8" />
+                    </div>
+                    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4 shadow-xl flex items-center justify-between">
+                        <div>
+                            <h3 className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Авто-удаление</h3>
+                            <p className="text-xl font-mono text-emerald-400">7 Дней</p>
+                            <p className="text-[10px] text-slate-500">TTL Active</p>
+                        </div>
+                        <Calendar className="text-emerald-500/50 w-8 h-8" />
+                    </div>
+                </div>
+
+                {/* Mail Client Interface container */}
+                <div className="flex-1 bg-white/95 rounded-xl shadow-2xl border border-slate-900/50 flex overflow-hidden backdrop-blur-sm">
+
+                    {/* Left Sidebar: List of Emails */}
+                    <div className={`${selectedTicket ? 'hidden md:flex' : 'flex'} w-full md:w-1/3 border-r border-slate-200 flex-col`}>
+                        <div className="bg-slate-100 p-3 border-b border-slate-200 flex gap-2">
+                            <div className="relative w-full">
+                                <Search className="absolute left-3 top-2 text-slate-400 w-4 h-4" />
+                                <input
+                                    type="text"
+                                    placeholder="Поиск писем..."
+                                    className="w-full pl-9 pr-3 py-1.5 bg-white border border-slate-300 rounded text-sm text-slate-800 focus:outline-none focus:border-blue-500"
+                                    value={search}
+                                    onChange={e => setSearch(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto">
+                            {filteredTickets.length === 0 ? (
+                                <div className="p-8 text-center text-slate-400 text-sm">
+                                    Нет писем
+                                </div>
+                            ) : (
+                                <div className="divide-y divide-slate-100">
+                                    {filteredTickets.map((t, i) => (
+                                        <div
+                                            key={i}
+                                            onClick={() => setSelectedTicket(t)}
+                                            className={`p-4 cursor-pointer transition-colors hover:bg-blue-50 relative group ${selectedTicket?.id === t?.id ? 'bg-blue-100 border-l-4 border-blue-500' : 'border-l-4 border-transparent'}`}
+                                        >
+                                            <div className="flex justification-between items-start mb-1">
+                                                <span className={`text-xs font-bold uppercase px-2 py-0.5 rounded-full ${t?.type === 'problem' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-slate-600'}`}>
+                                                    {t?.type || 'General'}
+                                                </span>
+                                                <span className="text-[10px] text-slate-400 ml-auto whitespace-nowrap">
+                                                    {t?.createdAt ? new Date(t.createdAt).toLocaleDateString() : 'Unknown'}
+                                                </span>
+                                            </div>
+                                            <h4 className="font-bold text-slate-800 text-sm truncate pr-4">{t?.name || 'Anonymous'}</h4>
+                                            <p className="text-xs text-slate-500 truncate mt-1">{t?.message || 'No content'}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
 
-                    {/* Window Container */}
-                    <div className="bg-white/95 text-slate-900 rounded-t-lg shadow-2xl overflow-hidden border border-slate-900/50 flex flex-col h-[600px]">
-                        {/* Wrapper Header */}
-                        <div className="bg-gradient-to-b from-[#e0ebf5] to-[#d0e0f0] px-4 py-2 border-b border-[#a0b0c0] flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <ShieldAlert size={16} className="text-slate-600" />
-                                <span className="font-bold text-slate-700 text-sm drop-shadow-sm">Support Tickets Viewer.exe</span>
+                    {/* Right Content: Reading Pane */}
+                    <div className={`${selectedTicket ? 'flex' : 'hidden md:flex'} w-full md:w-2/3 bg-slate-50 flex-col relative`}>
+                        {!selectedTicket ? (
+                            <div className="flex-1 flex flex-col items-center justify-center text-slate-400 p-10">
+                                <Mail className="w-16 h-16 mb-4 opacity-20" />
+                                <p>Выберите письмо для чтения</p>
                             </div>
-                            <div className="flex gap-1">
-                                <div className="w-3 h-3 rounded-full bg-slate-300 border border-slate-400"></div>
-                                <div className="w-3 h-3 rounded-full bg-slate-300 border border-slate-400"></div>
-                                <div className="w-3 h-3 rounded-full bg-red-400 border border-red-500 shadow-sm"></div>
+                        ) : (
+                            <div className="flex flex-col h-full">
+                                {/* Letter Header */}
+                                <div className="bg-white p-6 border-b border-slate-200 shadow-sm">
+                                    <div className="flex items-start justify-between mb-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xl font-bold">
+                                                {selectedTicket.name?.[0]?.toUpperCase() || '?'}
+                                            </div>
+                                            <div>
+                                                <h2 className="text-xl font-bold text-slate-900">{selectedTicket.name}</h2>
+                                                <p className="text-sm text-slate-500 flex items-center gap-2">
+                                                    {selectedTicket.email}
+                                                    <span className="w-1 h-1 bg-slate-300 rounded-full" />
+                                                    <span className="font-mono text-xs text-slate-400">{selectedTicket.ip}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col items-end gap-2">
+                                            <button
+                                                onClick={() => setSelectedTicket(null)}
+                                                className="md:hidden p-2 bg-slate-100 rounded-full"
+                                            >
+                                                <X size={20} className="text-slate-500" />
+                                            </button>
+                                            <span className="text-xs font-mono text-slate-400">ID: {selectedTicket.id}</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <div className="px-3 py-1 bg-slate-100 rounded border border-slate-200 text-xs font-bold text-slate-600">
+                                            Тема: {selectedTicket.type}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Letter Body */}
+                                <div className="flex-1 p-8 overflow-y-auto bg-white">
+                                    <div className="prose prose-slate max-w-none">
+                                        <p className="whitespace-pre-wrap leading-relaxed text-slate-800 text-base">
+                                            {selectedTicket.message}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Letter Actions */}
+                                <div className="p-4 bg-slate-50 border-t border-slate-200 flex justify-end gap-3">
+                                    <a href={`mailto:${selectedTicket.email}`} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold flex items-center gap-2 shadow-lg shadow-blue-500/20 transition-all">
+                                        <MessageSquare size={16} /> Ответить
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-
-                        {/* Toolbar */}
-                        <div className="bg-[#f0f4f8] border-b border-[#d0dbe5] p-2 flex gap-2">
-                            <div className="bg-white border border-[#c0d0e0] px-3 py-1 text-xs text-slate-600 rounded-sm shadow-sm flex items-center gap-2 w-full max-w-sm">
-                                <span className="text-slate-400">Filter:</span>
-                                <input type="text" placeholder="Search..." className="bg-transparent outline-none w-full" />
-                            </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="flex-1 overflow-auto bg-white">
-                            <table className="w-full text-sm text-left">
-                                <thead className="bg-slate-100 text-slate-600 font-bold sticky top-0 shadow-sm z-10">
-                                    <tr>
-                                        <th className="px-4 py-3 border-b border-slate-200 w-20">ID</th>
-                                        <th className="px-4 py-3 border-b border-slate-200 w-32">Date</th>
-                                        <th className="px-4 py-3 border-b border-slate-200 w-40">User</th>
-                                        <th className="px-4 py-3 border-b border-slate-200 w-32">Type</th>
-                                        <th className="px-4 py-3 border-b border-slate-200">Message</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-100">
-                                    {tickets.length === 0 ? (
-                                        <tr>
-                                            <td colSpan={5} className="px-4 py-12 text-center text-slate-400">
-                                                No tickets found in database.
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        tickets.map((t, i) => (
-                                            <tr key={i} className="hover:bg-blue-50 transition-colors group">
-                                                <td className="px-4 py-3 font-mono text-xs text-slate-400 truncate max-w-[80px]" title={t.id}>{t.id}</td>
-                                                <td className="px-4 py-3 text-slate-500 whitespace-nowrap">{new Date(t.createdAt).toLocaleDateString()}</td>
-                                                <td className="px-4 py-3">
-                                                    <div className="font-bold text-slate-800">{t.name}</div>
-                                                    <div className="text-xs text-slate-400">{t.email}</div>
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider
-                                                        ${t.type === 'problem' ? 'bg-red-100 text-red-600' :
-                                                            t.type === 'suggestion' ? 'bg-amber-100 text-amber-600' :
-                                                                'bg-blue-100 text-blue-600'}`}>
-                                                        {t.type}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3 text-slate-600 leading-relaxed max-w-md">
-                                                    {t.message}
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-
-                        {/* Footer */}
-                        <div className="bg-[#f0f4f8] border-t border-[#d0dbe5] p-1 px-4 text-xs text-slate-500 flex justify-between">
-                            <span>{tickets.length} items</span>
-                            <span>Connected to Vercel KV</span>
-                        </div>
+                        )}
                     </div>
+
                 </div>
             </main>
         </div>
