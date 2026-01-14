@@ -62,7 +62,7 @@ export function SupportForm() {
                 </div>
                 <h3 className="text-2xl font-bold text-slate-800 mb-2">Сообщение отправлено!</h3>
                 <p className="text-slate-600 mb-8 max-w-md mx-auto">
-                    Спасибо за обращение. Мы прочитаем его в ближайшее время. Ваша заявка сохранена в защищенном хранилище.
+                    Спасибо за обращение. Мы прочитаем его в ближайшее время.
                 </p>
                 <button
                     onClick={() => setStatus('idle')}
@@ -162,9 +162,7 @@ export function SupportForm() {
                             }}
                         />
                     </div>
-                    <p className="text-xs text-slate-400 text-center md:text-left ml-1">
-                        Защищено Cloudflare Turnstile и безопасным шифрованием.
-                    </p>
+
 
                     {status === 'error' && (
                         <div className="p-4 bg-red-50 text-red-600 rounded-xl flex items-center gap-3 text-sm font-medium animate-shake">
@@ -181,7 +179,7 @@ export function SupportForm() {
                         {status === 'loading' ? (
                             <>
                                 <Loader2 className="animate-spin" />
-                                Шифрование и отправка...
+                                Отправка...
                             </>
                         ) : (
                             <>
