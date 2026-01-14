@@ -17,6 +17,7 @@ import {
 import { SiteClosedScreen } from '@/components/SiteClosedScreen';
 import { RobloxVersion } from '@/components/RobloxVersion';
 import { FeedbackButton } from '../components/FeedbackButton';
+import { SupportForm } from '@/components/SupportForm';
 
 type ViewType = 'main' | 'disclaimer' | 'support' | 'donate';
 type TabType = 'zapret' | 'voice' | 'mobile' | 'faq' | 'versions';
@@ -108,34 +109,9 @@ export default function HomePage() {
                         Вернуться на главную
                     </button>
                     <h1 className="text-3xl font-black mb-6 text-slate-900 tracking-tight">Сотрудничество и Поддержка</h1>
-                    <div className="bg-red-50 border border-red-100 rounded-3xl p-6 mb-8 flex items-start gap-4">
-                        <div className="w-10 h-10 bg-red-100 rounded-2xl flex items-center justify-center flex-shrink-0 text-red-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                        </div>
-                        <p className="text-sm font-bold text-red-800 leading-relaxed">
-                            Важное сообщение: любые письма, не имеющие смысла или содержащие спам, будут проигнорированы без рассмотрения.
-                        </p>
-                    </div>
-                    <div className="space-y-8">
-                        <div className="group">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block">Email для связи</label>
-                            <div className="flex items-center gap-4 p-6 bg-slate-50 border border-slate-200 rounded-[32px] hover:border-slate-300 transition-all">
-                                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-slate-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                                </div>
-                                <div>
-                                    <a href="mailto:badazzredstudio@proton.me" className="text-lg font-black text-slate-900 hover:text-red-500 transition-colors">badazzredstudio@proton.me</a>
-                                    <p className="text-xs font-bold text-slate-400 mt-1">Ожидайте ответ в течение 48 часов</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="p-8 bg-slate-900 rounded-[32px] text-white">
-                            <h3 className="text-lg font-black mb-4">О чем можно писать?</h3>
-                            <ul className="space-y-3 text-sm text-slate-400 font-medium">
-                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-red-500" /> Предложения о сотрудничестве и рекламе</li>
-                                <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-red-500" /> Помощь в развитии проекта</li>
-                            </ul>
-                        </div>
+
+                    <div className="mb-12">
+                        <SupportForm />
                     </div>
                 </div>
                 <footer className="text-center pb-12 text-slate-400 text-xs font-bold uppercase tracking-widest">
