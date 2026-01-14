@@ -1,10 +1,10 @@
 'use client';
 
-import { Ban, ShieldAlert, AlertTriangle } from 'lucide-react';
+import { Ban, ShieldAlert, AlertTriangle, Loader2 } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 
-export default function AccessDenied() {
+function AccessDeniedContent() {
     const searchParams = useSearchParams();
     const reason = searchParams.get('reason');
     const country = searchParams.get('country');
@@ -118,5 +118,17 @@ export default function AccessDenied() {
                 System protection by ZapretGuard
             </div>
         </div>
+    );
+}
+
+export default function AccessDenied() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+                <Loader2 className="animate-spin text-slate-400 w-8 h-8" />
+            </div>
+        }>
+            <AccessDeniedContent />
+        </Suspense>
     );
 }

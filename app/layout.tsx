@@ -14,7 +14,6 @@ export const metadata: Metadata = {
         'voice chat roblox russia', 'roblox vng', 'warp', 'cloudflare'
     ],
     authors: [{ name: 'BADAZZRED' }],
-    viewport: 'width=device-width, initial-scale=1',
     creator: 'BADAZZRED',
     openGraph: {
         title: 'Roblox Bypass Hub — Рабочий обход 2026',
@@ -40,6 +39,11 @@ export const metadata: Metadata = {
         google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
         yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
     },
+};
+
+export const viewport = {
+    width: 'device-width',
+    initialScale: 1,
 };
 
 export default function RootLayout({
