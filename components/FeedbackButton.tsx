@@ -39,7 +39,10 @@ export function FeedbackButton() {
                 setHasVoted(true);
                 localStorage.setItem('roblox-bypass-voted', type);
             } else if (res.status === 429) {
-                alert('Слишком много запросов. Попробуйте позже.');
+                // If rate limited, it means user likely voted already.
+                // Just hide the button and don't annoy them.
+                setHasVoted(true);
+                localStorage.setItem('roblox-bypass-voted', type);
             }
         } catch (error) {
             console.error('Failed to submit vote:', error);
