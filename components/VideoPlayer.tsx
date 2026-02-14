@@ -114,7 +114,7 @@ export const VideoPlayer: React.FC = () => {
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className={`w-full bg-black shadow-2xl relative group transition-all ${isFullscreen ? 'rounded-none border-none' : 'rounded-[32px] border border-slate-200 overflow-hidden'}`}
+      className={`w-full aspect-video bg-black shadow-2xl relative group transition-all ${isFullscreen ? 'rounded-none border-none' : 'rounded-[32px] border border-slate-200 overflow-hidden'}`}
     >
       {/* Video Element */}
       <video

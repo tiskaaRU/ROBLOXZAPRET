@@ -178,13 +178,13 @@ export default function HomePage() {
                         </div>
 
                         {/* Navigation Tabs */}
-                        <div className="w-full md:w-auto overflow-x-auto pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 no-scrollbar">
-                            <div className="flex items-center p-1 bg-slate-100/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl w-max mx-auto">
+                        <div className="w-full md:w-auto overflow-x-auto pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 no-scrollbar touch-pan-x">
+                            <div className="flex items-center gap-1 p-1.5 bg-slate-100/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl w-max md:w-auto mx-auto min-w-full md:min-w-0 justify-between md:justify-center">
                                 {[
                                     { id: 'zapret', label: 'Zapret (ПК)' },
                                     { id: 'voice', label: 'Voice & Chat' },
                                     { id: 'mobile', label: 'Mobile' },
-                                    { id: 'vpn', label: 'VPN (Рекомендуем)' },
+                                    { id: 'vpn', label: 'VPN 🔥' },
                                     { id: 'faq', label: 'FAQ' },
                                     { id: 'versions', label: 'Версии' }
                                 ].map(tab => (
@@ -192,9 +192,9 @@ export default function HomePage() {
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id as TabType)}
                                         className={`
-                                            relative px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap
+                                            relative px-3 md:px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 whitespace-nowrap flex-1 md:flex-none text-center
                                             ${activeTab === tab.id
-                                                ? 'bg-white text-slate-900 shadow-sm shadow-slate-200 text-shadow-sm transform scale-100'
+                                                ? 'bg-white text-slate-900 shadow-sm shadow-slate-200 text-shadow-sm transform scale-100 ring-1 ring-black/5'
                                                 : tab.id === 'vpn' ? 'text-blue-600 bg-blue-50/50 hover:bg-blue-50' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
                                             }
                                         `}
