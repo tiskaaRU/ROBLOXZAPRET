@@ -20,7 +20,7 @@ import { FeedbackButton } from '../components/FeedbackButton';
 import { SupportForm } from '@/components/SupportForm';
 
 type ViewType = 'main' | 'disclaimer' | 'support' | 'donate';
-type TabType = 'zapret' | 'voice' | 'mobile' | 'faq' | 'versions';
+type TabType = 'zapret' | 'voice' | 'mobile' | 'faq' | 'versions' | 'vpn';
 
 export default function HomePage() {
     const [activeTab, setActiveTab] = useState<TabType>('zapret');
@@ -161,42 +161,85 @@ export default function HomePage() {
     return (
         <div className="min-h-screen flex flex-col selection:bg-red-500 selection:text-white bg-[#f8fafc]">
             {/* Sticky Navigation */}
-            <nav className="sticky top-0 z-50 glass-nav border-b border-slate-200 py-4 px-6">
-                <div className="container mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="flex items-center gap-3 cursor-pointer" onClick={navigateToMain}>
-                        <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-600/20">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                            </svg>
+            <nav className="sticky top-0 z-50 glass-nav border-b border-slate-200/60 bg-white/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/60">
+                <div className="container mx-auto max-w-7xl px-4 py-3 md:py-4">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
+                        {/* Logo & Brand */}
+                        <div className="flex items-center gap-3 cursor-pointer group" onClick={navigateToMain}>
+                            <div className="relative w-10 h-10 bg-gradient-to-br from-red-600 to-red-500 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/20 group-hover:scale-105 transition-transform duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                                </svg>
+                                <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </div>
+                            <span className="text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-red-600 transition-colors">
+                                Roblox Bypass <span className="text-red-600">Hub</span>
+                            </span>
                         </div>
-                        <span className="text-xl font-extrabold tracking-tight text-slate-900">Roblox Bypass Hub</span>
-                    </div>
 
-                    <div className="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 overflow-x-auto max-w-full no-scrollbar">
-                        {[
-                            { id: 'zapret', label: 'Zapret (ПК)' },
-                            { id: 'voice', label: 'Обход для голосового войса и чата' },
-                            { id: 'mobile', label: 'Обход для телефонов' },
-                            { id: 'faq', label: 'Помощь' },
-                            { id: 'versions', label: 'Версии' }
-                        ].map(tab => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id as TabType)}
-                                className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${activeTab === tab.id ? 'bg-white text-slate-900 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700'}`}
+                        {/* Navigation Tabs */}
+                        <div className="w-full md:w-auto overflow-x-auto pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 no-scrollbar">
+                            <div className="flex items-center p-1 bg-slate-100/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl w-max mx-auto">
+                                {[
+                                    { id: 'zapret', label: 'Zapret (ПК)' },
+                                    { id: 'voice', label: 'Voice & Chat' },
+                                    { id: 'mobile', label: 'Mobile' },
+                                    { id: 'vpn', label: 'VPN (Рекомендуем)' },
+                                    { id: 'faq', label: 'FAQ' },
+                                    { id: 'versions', label: 'Версии' }
+                                ].map(tab => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => setActiveTab(tab.id as TabType)}
+                                        className={`
+                                            relative px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap
+                                            ${activeTab === tab.id
+                                                ? 'bg-white text-slate-900 shadow-sm shadow-slate-200 text-shadow-sm transform scale-100'
+                                                : tab.id === 'vpn' ? 'text-blue-600 bg-blue-50/50 hover:bg-blue-50' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
+                                            }
+                                        `}
+                                    >
+                                        {tab.id === 'vpn' && (
+                                            <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
+                                            </span>
+                                        )}
+                                        {tab.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-end">
+                            <a
+                                href="https://t.me/ROBLOXRUBYPASS"
+                                target="_blank"
+                                className="hidden md:flex items-center gap-2 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl font-bold text-xs transition-all shadow-lg shadow-yellow-400/20 active:scale-95 group backdrop-blur-md"
                             >
-                                {tab.label}
-                            </button>
-                        ))}
-                    </div>
+                                <span>SOTA VPN</span>
+                            </a>
+                            <a
+                                href="https://t.me/ROBLOXRUBYPASS"
+                                target="_blank"
+                                className="flex items-center gap-2 px-5 py-2.5 bg-[#24A1DE] hover:bg-[#2095cf] text-white rounded-xl font-bold text-sm transition-all shadow-lg shadow-blue-500/20 active:scale-95 group backdrop-blur-md"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:-rotate-12 transition-transform" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.48-.94-2.4-1.54-1.06-.7-.37-1.09.23-1.72.15-.16 2.8-2.57 2.85-2.78.01-.03.01-.13-.06-.18-.07-.05-.17-.03-.25-.02-.11.02-1.91 1.2-5.39 3.57-.51.35-.96.52-1.37.51-.45-.01-1.33-.26-1.98-.47-.8-.26-1.43-.4-1.37-.84.03-.22.32-.44.89-.67 3.5-1.52 5.83-2.53 7-3.02 3.33-1.39 4.02-1.63 4.47-1.64.1-.01.32.02.47.14.12.1.15.24.17.34.01.12.01.27.01.4z" />
+                                </svg>
+                                <span className="hidden lg:inline">Подписаться</span>
+                                <span className="lg:hidden">Telegram</span>
+                            </a>
 
-                    <button
-                        onClick={navigateToDonate}
-                        className="hidden md:flex items-center gap-2 px-6 py-2.5 bg-red-600 text-white rounded-xl font-bold text-sm hover:bg-red-700 transition-all shadow-lg shadow-red-600/20 active:scale-95"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" /></svg>
-                        Поддержать проект
-                    </button>
+                            <button
+                                onClick={navigateToDonate}
+                                className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20 active:scale-95 border border-slate-700"
+                            >
+                                <span>Поддержать</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </nav>
 
@@ -339,6 +382,54 @@ export default function HomePage() {
                             </StepCard>
                             <StepCard number={3} title="DNS в приложении" description="В настройках ByeByeDPI измените значение DNS с 8.8.8.8 на 1.1.1.1. Этот шаг критичен для стабильной связи." />
                             <StepCard number={4} title="Подключение" description="Вернитесь на главный экран и нажмите 'Подключить'. Когда появится значок в шторке, запускайте Roblox." />
+                        </div>
+                    </div>
+                )}
+
+                {/* VPN TAB */}
+                {activeTab === 'vpn' && (
+                    <div className="space-y-12 animate-in slide-in-from-bottom-4 duration-500">
+                        <div className="text-center mb-16">
+                            <span className="px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest border border-blue-100 mb-6 inline-block">Рекомендация</span>
+                            <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">Лучшие VPN для Roblox</h1>
+                            <p className="text-slate-500 max-w-xl mx-auto text-lg leading-relaxed">Проверенные сервисы, которые обеспечивают минимальный пинг и стабильное соединение.</p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-8 mb-12">
+                            {/* SOTA VPN */}
+                            <div className="bg-white border border-slate-200 rounded-[32px] p-8 shadow-xl shadow-slate-200/50 hover:shadow-2xl transition-all relative overflow-hidden group hover:-translate-y-1">
+                                <div className="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-4 py-2 rounded-bl-2xl z-10">TOP 1</div>
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-4xl shadow-sm">🚀</div>
+                                    <div>
+                                        <h3 className="text-2xl font-black text-slate-900">SOTA VPN</h3>
+                                        <p className="text-slate-500 font-medium">Максимальная скорость</p>
+                                    </div>
+                                </div>
+                                <ul className="space-y-3 mb-8 text-slate-600 font-medium">
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Низкий пинг в Roblox</li>
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Работает YouTube 4K</li>
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Discord голосовой чат</li>
+                                </ul>
+                                <a href="https://t.me/ROBLOXRUBYPASS" target="_blank" className="w-full flex items-center justify-center py-4 bg-[#24A1DE] text-white rounded-xl font-bold hover:bg-[#2095cf] transition-all shadow-lg shadow-blue-400/20">Подключить SOTA VPN</a>
+                            </div>
+
+                            {/* HITVPN */}
+                            <div className="bg-white border border-slate-200 rounded-[32px] p-8 shadow-xl shadow-slate-200/50 hover:shadow-2xl transition-all group hover:-translate-y-1">
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-4xl shadow-sm">⚡</div>
+                                    <div>
+                                        <h3 className="text-2xl font-black text-slate-900">HITVPN</h3>
+                                        <p className="text-slate-500 font-medium">Стабильность</p>
+                                    </div>
+                                </div>
+                                <ul className="space-y-3 mb-8 text-slate-600 font-medium">
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Простая настройка</li>
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Высокая надежность</li>
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Поддержка 24/7</li>
+                                </ul>
+                                <a href="https://t.me/ROBLOXRUBYPASS" target="_blank" className="w-full flex items-center justify-center py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20">Подключить HITVPN</a>
+                            </div>
                         </div>
                     </div>
                 )}
