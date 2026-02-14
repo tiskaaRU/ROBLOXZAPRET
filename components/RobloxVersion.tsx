@@ -85,15 +85,11 @@ export const RobloxVersion: React.FC = () => {
         fetchVersions();
     }, []);
 
-    const VersionCard = ({ title, data, icon, color }: { title: string, data: VersionData | null, icon: React.ReactNode, color: string }) => (
+    const VersionCard = ({ title, data, imageSrc, color }: { title: string, data: VersionData | null, imageSrc: string, color: string }) => (
         <div className={`relative overflow-hidden bg-white border border-slate-200 rounded-[32px] p-6 shadow-xl shadow-slate-200/50 group hover:border-${color}-200 transition-all duration-300`}>
-            <div className={`absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-${color}-500`}>
-                {icon}
-            </div>
-
             <div className="flex items-center gap-4 mb-4 relative z-10">
-                <div className={`w-14 h-14 rounded-2xl bg-${color}-50 flex items-center justify-center text-${color}-600 shadow-sm`}>
-                    {icon}
+                <div className={`w-20 h-20 rounded-2xl bg-${color}-50 flex items-center justify-center text-${color}-600 shadow-sm overflow-hidden p-2`}>
+                    <img src={imageSrc} alt={title} className="w-full h-full object-contain drop-shadow-md transform group-hover:scale-110 transition-transform duration-300" />
                 </div>
                 <div>
                     <h3 className="text-xl font-black text-slate-900">{title}</h3>
@@ -150,13 +146,13 @@ export const RobloxVersion: React.FC = () => {
                             title="Roblox Player"
                             data={playerData}
                             color="red"
-                            icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" /></svg>}
+                            imageSrc="/roblox-player-3d.png"
                         />
                         <VersionCard
                             title="Roblox Studio"
                             data={studioData}
                             color="blue"
-                            icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>}
+                            imageSrc="/roblox-studio-3d.png"
                         />
                     </div>
 

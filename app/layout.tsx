@@ -3,22 +3,23 @@ import './globals.css';
 
 export const metadata: Metadata = {
     title: {
-        default: 'Roblox Bypass Hub — Обход блокировки Роблокс и Дискорд в России 2026',
+        default: 'Roblox Bypass Hub — Почини Роблокс, Дискорд и Ютуб в РФ 2026',
         template: '%s | Roblox Bypass Hub'
     },
-    description: 'Бесплатные инструкции по обходу блокировки Roblox, Discord и YouTube в России на ПК, iOS и Android. Скачать Zapret, ByeByeDPI. Настройка VPN для голосового чата.',
+    description: 'Рабочий способ обхода блокировки Roblox, Discord и YouTube в России. Скачать Zapret 2026, ByeByeDPI Android. Настройка Sota VPN для низкого пинга.',
     keywords: [
         'roblox', 'роблокс', 'обход блокировки', 'zapret', 'byebyedpi', 'россия', 'vpn', 'голосовой чат',
-        'разблокировать роблокс', 'discord fix', 'дискорд не работает', 'ютуб замедление', 'youtube fix',
-        'гудбай дпи', 'goodbyedpi', 'антизапрет', 'как зайти в роблокс', 'не работает роблокс', 'roblox ошибка',
+        'разблокировать роблокс', 'как зайти в роблокс', 'не работает роблокс', 'roblox ошибка',
         'voice chat roblox russia', 'roblox vng', 'warp', 'cloudflare', 'roblox ios', 'roblox android',
-        'роблокс на айфоне', 'роблокс на телефоне', 'gearup booster', 'обход на телефоне'
+        'роблокс на айфоне', 'роблокс на телефоне', 'gearup booster', 'обход на телефоне',
+        'sota vpn', 'сота впн', 'discord fix', 'youtube fix', 'починить дискорд', 'починить ютуб',
+        'низкий пинг', 'low ping vpn', 'бесплатный впн', 'free vpn roblox'
     ],
     authors: [{ name: 'BADAZZRED' }],
     creator: 'BADAZZRED',
     openGraph: {
-        title: 'Roblox Bypass Hub — Рабочий обход 2026',
-        description: 'Почини Роблокс, Дискорд и Ютуб в один клик. Бесплатные утилиты и гайды.',
+        title: 'Roblox Bypass Hub — Рабочий обход 2026 (Roblox, Discord, YouTube)',
+        description: 'Почини Роблокс, Дискорд и Ютуб в один клик. Бесплатные утилиты Zapret/ByeByeDPI и быстрый Sota VPN.',
         url: 'https://robloxzapret.vercel.app',
         siteName: 'Roblox Bypass Hub',
         locale: 'ru_RU',

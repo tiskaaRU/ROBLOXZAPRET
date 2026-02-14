@@ -76,7 +76,7 @@ usermoderation.roblox.com`;
 export const DOWNLOAD_LINK = "https://github.com/Flowseal/zapret-discord-youtube/releases/download/1.9.3/zapret-discord-youtube-1.9.3.rar";
 export const ROBLOX_VN_APK = "https://apkpure.net/roblox-vng-2025/com.roblox.client.vnggames";
 export const ROBLOX_SETTINGS = "https://www.roblox.com/my/account#!/info";
-export const SOTA_VPN_TG = "https://t.me/sotavpn";
+export const SOTA_VPN_TG = "https://t.me/sota?start=806639075";
 export const BYEBYEDPI_GITHUB = "https://github.com/romanvht/ByeDPIAndroid/releases/latest";
 
 export const BYEBYEDPI_ARGS_1 = "-o1 -d1 -a1 -At,r,s -s1 -d1 -s5+s -s10+s -s15+s -s20+s -r1+s -S -a1 -As -s1 -d1 -s5+s -s10+s -s15+s -s20+s -S -a1";
