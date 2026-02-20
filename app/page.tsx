@@ -22,6 +22,32 @@ import { SupportForm } from '@/components/SupportForm';
 type ViewType = 'main' | 'disclaimer' | 'support' | 'donate';
 type TabType = 'zapret' | 'voice' | 'mobile' | 'faq' | 'versions' | 'vpn';
 
+const CopySnippet = ({ text }: { text: string }) => {
+    const [copied, setCopied] = useState(false);
+    const handle = () => {
+        navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+    return (
+        <div className="relative mt-2">
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-[11px] text-slate-500 break-all leading-relaxed pr-12">
+                {text}
+            </div>
+            <button
+                onClick={handle}
+                className="absolute top-2 right-2 p-2 bg-white border border-slate-200 rounded-lg shadow-sm hover:bg-slate-50 text-slate-400 hover:text-red-500 transition-all"
+            >
+                {copied ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" /><path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" /></svg>
+                )}
+            </button>
+        </div>
+    );
+};
+
 export default function HomePage() {
     const [activeTab, setActiveTab] = useState<TabType>('zapret');
     const [view, setView] = useState<ViewType>('main');
@@ -48,53 +74,28 @@ export default function HomePage() {
         scrollToTop();
     };
 
-    const CopySnippet = ({ text }: { text: string }) => {
-        const [copied, setCopied] = useState(false);
-        const handle = () => {
-            navigator.clipboard.writeText(text);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        };
-        return (
-            <div className="relative mt-2">
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-[11px] text-slate-500 break-all leading-relaxed pr-12">
-                    {text}
-                </div>
-                <button
-                    onClick={handle}
-                    className="absolute top-2 right-2 p-2 bg-white border border-slate-200 rounded-lg shadow-sm hover:bg-slate-50 text-slate-400 hover:text-red-500 transition-all"
-                >
-                    {copied ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                    ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" /><path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" /></svg>
-                    )}
-                </button>
-            </div>
-        );
-    };
-
     if (SITE_CONFIG.isClosed) {
         return <SiteClosedScreen />;
     }
 
     if (view === 'disclaimer') {
         return (
-            <div className="min-h-screen bg-slate-50 flex flex-col p-6 animate-in">
-                <div className="max-w-2xl mx-auto w-full bg-white border border-slate-200 rounded-[40px] p-8 md:p-12 shadow-2xl shadow-slate-200/50 mt-12 mb-20">
-                    <button onClick={navigateToMain} className="mb-8 flex items-center gap-2 text-slate-400 hover:text-slate-900 font-bold transition-all group">
+            <div className="min-h-screen bg-[#09090b] flex flex-col p-6 animate-in">
+                <div className="max-w-2xl mx-auto w-full bg-slate-900/40 backdrop-blur-sm border border-slate-800 rounded-[40px] p-8 md:p-12 shadow-2xl shadow-black/20 mt-12 mb-20 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-slate-800/30 rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none blur-3xl" />
+                    <button onClick={navigateToMain} className="relative z-10 mb-8 flex items-center gap-2 text-slate-400 hover:text-slate-200 font-bold transition-all group">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                         Вернуться назад
                     </button>
-                    <h1 className="text-3xl font-black mb-6 text-slate-900">Disclaimer / Отказ от ответственности</h1>
-                    <div className="space-y-6 text-slate-500 leading-loose text-sm md:text-base">
+                    <h1 className="relative z-10 text-3xl font-black mb-6 text-slate-100">Disclaimer / Отказ от ответственности</h1>
+                    <div className="relative z-10 space-y-6 text-slate-400 leading-loose text-sm md:text-base">
                         <p>Данный сайт и размещенная на нем информация предоставлены исключительно в ознакомительных и технических целях. Администрация ресурса не несет ответственности за использование данного программного обеспечения пользователями.</p>
                         <p>Программное обеспечение (Zapret, ByeByeDPI и др.) является инструментами с открытым исходным кодом, разработанными третьими лицами. Мы не призываем к нарушению законодательства РФ или обходу блокировок, установленных РКН, а лишь предоставляем техническую документацию по настройке сетевого ПО.</p>
                         <p>Все права на торговую марку Roblox принадлежат Roblox Corporation. Мы не являемся официальными представителями и не связаны с разработчиками игры. Использование любых методов обхода осуществляется пользователем на собственный страх и риск.</p>
                     </div>
                 </div>
-                <footer className="text-center pb-12 text-slate-400 text-xs font-bold uppercase tracking-widest">
-                    Created by <span className="text-red-500">BADAZZRED</span>
+                <footer className="text-center pb-12 text-slate-500 text-xs font-bold uppercase tracking-widest">
+                    Created by <span className="text-purple-400">BADAZZRED</span>
                 </footer>
             </div>
         );
@@ -102,20 +103,19 @@ export default function HomePage() {
 
     if (view === 'support') {
         return (
-            <div className="min-h-screen bg-slate-50 flex flex-col p-6 animate-in">
-                <div className="max-w-2xl mx-auto w-full bg-white border border-slate-200 rounded-[40px] p-8 md:p-12 shadow-2xl shadow-slate-200/50 mt-12 mb-20">
-                    <button onClick={navigateToMain} className="mb-8 flex items-center gap-2 text-slate-400 hover:text-slate-900 font-bold transition-all group">
+            <div className="min-h-screen bg-[#09090b] flex flex-col p-6 animate-in">
+                <div className="max-w-3xl mx-auto w-full mt-12 mb-20">
+                    <button onClick={navigateToMain} className="mb-8 flex items-center gap-2 text-slate-400 hover:text-slate-200 font-bold transition-all group">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                         Вернуться на главную
                     </button>
-                    <h1 className="text-3xl font-black mb-6 text-slate-900 tracking-tight">Сотрудничество и Поддержка</h1>
 
                     <div className="mb-12">
                         <SupportForm />
                     </div>
                 </div>
-                <footer className="text-center pb-12 text-slate-400 text-xs font-bold uppercase tracking-widest">
-                    Created by <span className="text-red-500">BADAZZRED</span>
+                <footer className="text-center pb-12 text-slate-500 text-xs font-bold uppercase tracking-widest mt-auto">
+                    Created by <span className="text-purple-400">BADAZZRED</span>
                 </footer>
             </div>
         );
@@ -123,63 +123,97 @@ export default function HomePage() {
 
     if (view === 'donate') {
         return (
-            <div className="min-h-screen bg-slate-50 flex flex-col p-6 animate-in">
-                <div className="max-w-2xl mx-auto w-full bg-white border border-slate-200 rounded-[40px] p-8 md:p-12 shadow-2xl shadow-slate-200/50 mt-12 mb-20">
-                    <button onClick={navigateToMain} className="mb-8 flex items-center gap-2 text-slate-400 hover:text-slate-900 font-bold transition-all group">
+            <div className="min-h-screen bg-[#09090b] flex flex-col p-6 animate-in">
+                <div className="max-w-2xl mx-auto w-full bg-slate-900/40 backdrop-blur-sm border border-slate-800 rounded-[40px] p-8 md:p-12 shadow-2xl shadow-black/20 mt-12 mb-20 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-slate-800/30 rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none blur-3xl" />
+                    <button onClick={navigateToMain} className="relative z-10 mb-8 flex items-center gap-2 text-slate-400 hover:text-slate-200 font-bold transition-all group">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                         Вернуться назад
                     </button>
-                    <h1 className="text-3xl font-black mb-6 text-slate-900 tracking-tight">Поддержать проект</h1>
-                    <p className="text-slate-500 text-lg leading-relaxed mb-10">
+                    <h1 className="relative z-10 text-3xl font-black mb-6 text-slate-100 tracking-tight">Поддержать проект</h1>
+                    <p className="relative z-10 text-slate-400 text-lg leading-relaxed mb-10">
                         Мы развиваем проект на чистом энтузиазме. Если наши инструкции помогли вам вернуть доступ к любимой игре, вы можете поддержать нас копеечкой.
                     </p>
-                    <div className="bg-emerald-50 border border-emerald-100 rounded-[32px] p-8">
-                        <h3 className="text-xl font-black text-emerald-900 mb-6 flex items-center gap-3">
-                            <span className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                            </span>
-                            Реквизиты для доната
-                        </h3>
-                        <div className="space-y-6">
-                            <div className="bg-white rounded-2xl p-6 border border-emerald-100 shadow-sm">
-                                <p className="text-emerald-800 text-sm font-medium leading-relaxed text-center">
-                                    <span className="font-bold block text-lg mb-2">Раздел в разработке</span>
-                                    Мы настраиваем приём платежей. Реквизиты появятся здесь в ближайшее время.<br />
-                                    Спасибо, что вы с нами! ❤️
-                                </p>
+                    <div className="relative z-10 grid md:grid-cols-2 gap-6">
+                        {/* CloudTips Card */}
+                        <a
+                            href="https://pay.cloudtips.ru/p/5109cdcf"
+                            target="_blank"
+                            className="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-[32px] p-8 text-white shadow-xl shadow-blue-500/20 hover:shadow-2xl transition-all group hover:-translate-y-1 relative overflow-hidden"
+                        >
+                            <div className="absolute top-0 right-0 p-6 opacity-20">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-32 w-32 rotate-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                            </div>
+
+                            <div className="relative z-10 h-full flex flex-col justify-between">
+                                <div>
+                                    <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    </div>
+                                    <h3 className="text-2xl font-black mb-2">Банковская карта</h3>
+                                    <p className="text-blue-100 text-sm font-medium">CloudTips (СБП, T-Pay)</p>
+                                </div>
+                                <div className="mt-8 flex items-center gap-2 font-bold text-sm bg-white/10 w-fit px-4 py-2 rounded-xl backdrop-blur-sm group-hover:bg-white/20 transition-colors">
+                                    <span>Отправить донат</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                                </div>
+                            </div>
+                        </a>
+
+                        {/* TON Crypto Card */}
+                        <div className="bg-slate-900/50 border border-slate-800 rounded-[32px] p-8 shadow-xl shadow-black/20 hover:border-blue-500/30 transition-colors">
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center overflow-hidden border border-blue-500/20">
+                                    {/* TON Logo Placeholder / Generic Crypto Icon */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V14.5h-2.82v3.59h2.82zM12 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm1.41-6.09h-2.82V10.5h2.82V6.91z" /></svg>
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-black text-slate-100">TON (Crypto)</h3>
+                                    <p className="text-slate-400 text-xs font-bold uppercase tracking-wider">The Open Network</p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
+                                <div>
+                                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Адрес кошелька</p>
+                                    <CopySnippet text="UQAh_2xgOsbm-lES_2cLJt6x33nZIgZ7ZJxYlLLXXk45_i_3" />
+                                </div>
+                                <div className="p-4 bg-slate-800/50 rounded-2xl text-[11px] text-slate-400 font-medium leading-relaxed border border-slate-800">
+                                    Отправляйте только <b>Toncoin</b> в сети TON. Другие токены могут быть утеряны навсегда.
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <footer className="text-center pb-12 text-slate-400 text-xs font-bold uppercase tracking-widest">
-                    Created by <span className="text-red-500">BADAZZRED</span>
+                <footer className="text-center pb-12 text-slate-500 text-xs font-bold uppercase tracking-widest">
+                    Created by <span className="text-purple-400">BADAZZRED</span>
                 </footer>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen flex flex-col selection:bg-red-500 selection:text-white bg-[#f8fafc]">
+        <div className="min-h-screen flex flex-col selection:bg-purple-500/30 selection:text-purple-200 bg-[#09090b]">
             {/* Sticky Navigation */}
-            <nav className="sticky top-0 z-50 glass-nav border-b border-slate-200/60 bg-white/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/60">
+            <nav className="sticky top-0 z-50 glass-nav">
                 <div className="container mx-auto max-w-7xl px-4 py-3 md:py-4">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
                         {/* Logo & Brand */}
                         <div className="flex items-center gap-3 cursor-pointer group" onClick={navigateToMain}>
-                            <div className="relative w-10 h-10 bg-gradient-to-br from-red-600 to-red-500 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <div className="relative w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:scale-105 transition-all duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
                                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                                 </svg>
                                 <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                             </div>
-                            <span className="text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-red-600 transition-colors">
-                                Roblox Bypass <span className="text-red-600">Hub</span>
+                            <span className="text-xl font-extrabold tracking-tight text-slate-100 group-hover:text-purple-400 transition-colors">
+                                Roblox Bypass <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">Hub</span>
                             </span>
                         </div>
 
                         {/* Navigation Tabs */}
                         <div className="w-full md:w-auto overflow-x-auto pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 no-scrollbar touch-pan-x">
-                            <div className="flex items-center gap-1 p-1.5 bg-slate-100/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl w-max md:w-auto mx-auto min-w-full md:min-w-0 justify-between md:justify-center">
+                            <div className="flex items-center gap-1 p-1.5 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl w-max md:w-auto mx-auto min-w-full md:min-w-0 justify-between md:justify-center">
                                 {[
                                     { id: 'zapret', label: 'Zapret (ПК)' },
                                     { id: 'voice', label: 'Voice & Chat' },
@@ -194,15 +228,15 @@ export default function HomePage() {
                                         className={`
                                             relative px-3 md:px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 whitespace-nowrap flex-1 md:flex-none text-center
                                             ${activeTab === tab.id
-                                                ? 'bg-white text-slate-900 shadow-sm shadow-slate-200 text-shadow-sm transform scale-100 ring-1 ring-black/5'
-                                                : tab.id === 'vpn' ? 'text-blue-600 bg-blue-50/50 hover:bg-blue-50' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
+                                                ? 'bg-slate-800 text-white shadow-lg text-shadow-sm transform scale-100 ring-1 ring-slate-700'
+                                                : tab.id === 'vpn' ? 'text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 hover:text-indigo-300' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
                                             }
                                         `}
                                     >
                                         {tab.id === 'vpn' && (
                                             <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-500"></span>
                                             </span>
                                         )}
                                         {tab.label}
@@ -216,14 +250,14 @@ export default function HomePage() {
                             <a
                                 href="https://t.me/ROBLOXRUBYPASS"
                                 target="_blank"
-                                className="hidden md:flex items-center gap-2 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl font-bold text-xs transition-all shadow-lg shadow-yellow-400/20 active:scale-95 group backdrop-blur-md"
+                                className="hidden md:flex items-center gap-2 px-4 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 rounded-xl font-bold text-xs transition-all shadow-lg active:scale-95 group border border-indigo-500/20"
                             >
                                 <span>SOTA VPN</span>
                             </a>
                             <a
                                 href="https://t.me/ROBLOXRUBYPASS"
                                 target="_blank"
-                                className="flex items-center gap-2 px-5 py-2.5 bg-[#24A1DE] hover:bg-[#2095cf] text-white rounded-xl font-bold text-sm transition-all shadow-lg shadow-blue-500/20 active:scale-95 group backdrop-blur-md"
+                                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl font-bold text-sm transition-all shadow-lg shadow-purple-500/25 active:scale-95 group"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:-rotate-12 transition-transform" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.48-.94-2.4-1.54-1.06-.7-.37-1.09.23-1.72.15-.16 2.8-2.57 2.85-2.78.01-.03.01-.13-.06-.18-.07-.05-.17-.03-.25-.02-.11.02-1.91 1.2-5.39 3.57-.51.35-.96.52-1.37.51-.45-.01-1.33-.26-1.98-.47-.8-.26-1.43-.4-1.37-.84.03-.22.32-.44.89-.67 3.5-1.52 5.83-2.53 7-3.02 3.33-1.39 4.02-1.63 4.47-1.64.1-.01.32.02.47.14.12.1.15.24.17.34.01.12.01.27.01.4z" />
@@ -234,7 +268,7 @@ export default function HomePage() {
 
                             <button
                                 onClick={navigateToDonate}
-                                className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20 active:scale-95 border border-slate-700"
+                                className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white rounded-xl font-bold text-sm hover:bg-slate-700 transition-all shadow-lg shadow-black/20 active:scale-95 border border-slate-700"
                             >
                                 <span>Поддержать</span>
                             </button>
@@ -244,18 +278,20 @@ export default function HomePage() {
             </nav>
 
             {/* Feedback Button */}
+            {/* ВРЕМЕННО ОТКЛЮЧЕНО: ЛИМИТЫ VERCEL KV
             <div className="container mx-auto max-w-3xl px-6 pt-8">
                 <FeedbackButton />
             </div>
+            */}
 
             <main className="flex-grow container mx-auto max-w-3xl px-6 py-12 md:py-20">
                 {/* PC ZAPRET TAB */}
                 {activeTab === 'zapret' && (
                     <div className="space-y-12 animate-in">
                         <div className="text-center mb-16">
-                            <span className="px-4 py-1.5 rounded-full bg-red-50 text-red-600 text-xs font-bold uppercase tracking-widest border border-red-100 mb-6 inline-block">Инструкция для ПК</span>
-                            <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">Инструкция по работе с Zapret</h1>
-                            <p className="text-slate-500 max-w-xl mx-auto text-lg leading-relaxed">Настройка сетевого уровня для восстановления доступа к Roblox на Windows. Смотрите видео-гайд от BADAZZREDSTUDIO ниже.</p>
+                            <span className="px-4 py-1.5 rounded-full bg-purple-500/10 text-purple-400 text-xs font-bold uppercase tracking-widest border border-purple-500/20 mb-6 inline-block">Инструкция для ПК</span>
+                            <h1 className="text-4xl md:text-5xl font-black text-slate-100 mb-6 tracking-tight">Инструкция по работе с <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">Zapret</span></h1>
+                            <p className="text-slate-400 max-w-xl mx-auto text-lg leading-relaxed">Настройка сетевого уровня для восстановления доступа к Roblox на Windows. Смотрите видео-гайд от BADAZZREDSTUDIO ниже.</p>
                         </div>
 
                         <div className="mb-20">
@@ -279,13 +315,13 @@ export default function HomePage() {
                 {activeTab === 'voice' && (
                     <div className="space-y-12 animate-in">
                         <div className="text-center mb-16">
-                            <span className="px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest border border-blue-100 mb-6 inline-block">Voice & Chat 2025</span>
-                            <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">Обход чата и войса</h1>
-                            <p className="text-slate-500 max-w-xl mx-auto text-lg leading-relaxed">Метод смены региона на Вьетнам (VN) позволяет вернуть чат даже на аккаунтах, созданных в РФ.</p>
+                            <span className="px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-widest border border-blue-500/20 mb-6 inline-block">Voice & Chat 2025</span>
+                            <h1 className="text-4xl md:text-5xl font-black text-slate-100 mb-6 tracking-tight">Обход <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Чата и Войса</span></h1>
+                            <p className="text-slate-400 max-w-xl mx-auto text-lg leading-relaxed">Метод смены региона на Вьетнам (VN) позволяет вернуть чат даже на аккаунтах, созданных в РФ.</p>
                         </div>
 
-                        <div className="bg-amber-50 border-2 border-dashed border-amber-200 rounded-[32px] p-8 text-amber-900 mb-12">
-                            <div className="flex items-center gap-3 mb-4 font-black uppercase tracking-wider text-xs">
+                        <div className="bg-amber-500/10 border-2 border-dashed border-amber-500/30 rounded-[32px] p-8 text-amber-200 mb-12 backdrop-blur-sm">
+                            <div className="flex items-center gap-3 mb-4 font-black uppercase tracking-wider text-xs text-amber-400">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-amber-500" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1-1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
                                 Внимание: Прочитайте перед действием!
                             </div>
@@ -298,12 +334,12 @@ export default function HomePage() {
 
                         <div className="space-y-8">
                             <StepCard number={1} title="Верификация" description="Убедитесь, что ваш возраст подтвержден. Перейдите в настройки аккаунта и проверьте поле 'Account Location'.">
-                                <a href={ROBLOX_SETTINGS} target="_blank" className="inline-flex items-center justify-center px-8 py-3 border-2 border-slate-200 hover:border-blue-500 hover:text-blue-600 rounded-xl font-bold transition-all text-slate-600">Настройки аккаунта</a>
+                                <a href={ROBLOX_SETTINGS} target="_blank" className="inline-flex items-center justify-center px-8 py-3 border-2 border-slate-700 hover:border-blue-500 hover:text-blue-400 hover:bg-blue-500/10 rounded-xl font-bold transition-all text-slate-300">Настройки аккаунта</a>
                             </StepCard>
                             <StepCard number={2} title="Скачивание Roblox VN" description="Скачайте специальную версию Roblox VNG для Android.">
-                                <a href={ROBLOX_VN_APK} target="_blank" className="flex items-center gap-4 p-5 bg-slate-900 text-white rounded-3xl hover:bg-slate-800 transition-all group">
-                                    <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                <a href={ROBLOX_VN_APK} target="_blank" className="flex items-center gap-4 p-5 bg-slate-800 text-slate-100 rounded-3xl hover:bg-slate-700 transition-all group border border-slate-700 shadow-xl shadow-black/20">
+                                    <div className="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                                     </div>
                                     <div>
                                         <div className="font-black text-sm">Скачать Roblox VNG APK</div>
@@ -315,15 +351,16 @@ export default function HomePage() {
                             <StepCard number={4} title="Использование чата" description="Если чат заблокирован — это баг интерфейса. Нажмите '/' для вызова окна. Войс чат также будет активен." />
                         </div>
 
-                        <div className="mt-16 p-8 rounded-[40px] border-2 border-slate-100 bg-white shadow-xl shadow-slate-200/50">
-                            <h3 className="text-xl font-black mb-6 flex items-center gap-3">
-                                <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-white">
+                        <div className="mt-16 p-8 rounded-[40px] border border-slate-800 bg-slate-900/50 backdrop-blur-sm shadow-xl shadow-black/20 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+                            <h3 className="text-xl font-black mb-6 flex items-center gap-3 relative z-10 text-slate-100">
+                                <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 border border-blue-500/30">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                                 </div>
                                 Альтернатива: VPN
                             </h3>
-                            <p className="text-slate-500 mb-8 text-sm font-medium leading-relaxed">Классический метод — использование специализированных VPN сервисов. Рекомендуем SOTA VPN для стабильного пинга.</p>
-                            <a href={SOTA_VPN_TG} target="_blank" className="flex items-center justify-between px-8 py-5 bg-[#24A1DE] text-white rounded-2xl font-black shadow-lg shadow-blue-500/20 group">
+                            <p className="text-slate-400 mb-8 text-sm font-medium leading-relaxed relative z-10">Классический метод — использование специализированных VPN сервисов. Рекомендуем SOTA VPN для стабильного пинга.</p>
+                            <a href={SOTA_VPN_TG} target="_blank" className="relative z-10 flex items-center justify-between px-8 py-5 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-2xl font-black shadow-lg shadow-blue-500/25 group hover:from-blue-500 hover:to-cyan-500 transition-all">
                                 <span>Подключить SOTA VPN</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                             </a>
@@ -335,9 +372,9 @@ export default function HomePage() {
                 {activeTab === 'mobile' && (
                     <div className="space-y-12 animate-in">
                         <div className="text-center mb-16">
-                            <span className="px-4 py-1.5 rounded-full bg-purple-50 text-purple-600 text-xs font-bold uppercase tracking-widest border border-purple-100 mb-6 inline-block">Android Bypass</span>
-                            <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">ByeByeDPI Mobile</h1>
-                            <p className="text-slate-500 max-w-xl mx-auto text-lg leading-relaxed">Инструкция по настройке приложения ByeByeDPI и системного DNS для Android устройств.</p>
+                            <span className="px-4 py-1.5 rounded-full bg-purple-500/10 text-purple-400 text-xs font-bold uppercase tracking-widest border border-purple-500/20 mb-6 inline-block">Android Bypass</span>
+                            <h1 className="text-4xl md:text-5xl font-black text-slate-100 mb-6 tracking-tight">ByeByeDPI Mobile</h1>
+                            <p className="text-slate-400 max-w-xl mx-auto text-lg leading-relaxed">Инструкция по настройке приложения ByeByeDPI и системного DNS для Android устройств.</p>
                         </div>
 
                         <div className="relative overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-700 rounded-[40px] p-10 text-white shadow-2xl shadow-purple-200 mb-12">
@@ -390,45 +427,45 @@ export default function HomePage() {
                 {activeTab === 'vpn' && (
                     <div className="space-y-12 animate-in slide-in-from-bottom-4 duration-500">
                         <div className="text-center mb-16">
-                            <span className="px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-widest border border-blue-100 mb-6 inline-block">Рекомендация</span>
-                            <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">Лучшие VPN для Roblox</h1>
-                            <p className="text-slate-500 max-w-xl mx-auto text-lg leading-relaxed">Проверенные сервисы, которые обеспечивают минимальный пинг и стабильное соединение.</p>
+                            <span className="px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-bold uppercase tracking-widest border border-indigo-500/20 mb-6 inline-block">Рекомендация</span>
+                            <h1 className="text-4xl md:text-5xl font-black text-slate-100 mb-6 tracking-tight">Лучшие VPN для Roblox</h1>
+                            <p className="text-slate-400 max-w-xl mx-auto text-lg leading-relaxed">Проверенные сервисы, которые обеспечивают минимальный пинг и стабильное соединение.</p>
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-8 mb-12">
                             {/* SOTA VPN */}
-                            <div className="bg-white border border-slate-200 rounded-[32px] p-8 shadow-xl shadow-slate-200/50 hover:shadow-2xl transition-all relative overflow-hidden group hover:-translate-y-1">
-                                <div className="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-4 py-2 rounded-bl-2xl z-10">TOP 1</div>
+                            <div className="bg-slate-900/40 backdrop-blur-sm border border-blue-500/30 rounded-[32px] p-8 shadow-xl shadow-blue-500/10 hover:shadow-2xl hover:shadow-blue-500/20 hover:border-blue-500/50 transition-all relative overflow-hidden group hover:-translate-y-1">
+                                <div className="absolute top-0 right-0 bg-gradient-to-r from-yellow-500 to-amber-500 text-yellow-950 text-xs font-bold px-4 py-2 rounded-bl-2xl z-10 shadow-lg shadow-yellow-500/20">TOP 1</div>
                                 <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-4xl shadow-sm">🚀</div>
+                                    <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center text-4xl shadow-inner border border-blue-500/20">🚀</div>
                                     <div>
-                                        <h3 className="text-2xl font-black text-slate-900">SOTA VPN</h3>
-                                        <p className="text-slate-500 font-medium">Максимальная скорость</p>
+                                        <h3 className="text-2xl font-black text-slate-100">SOTA VPN</h3>
+                                        <p className="text-blue-400 font-medium text-sm">Максимальная скорость</p>
                                     </div>
                                 </div>
-                                <ul className="space-y-3 mb-8 text-slate-600 font-medium">
-                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Низкий пинг в Roblox</li>
-                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Работает YouTube 4K</li>
-                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Discord голосовой чат</li>
+                                <ul className="space-y-3 mb-8 text-slate-400 font-medium">
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Низкий пинг в Roblox</li>
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Работает YouTube 4K</li>
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Discord голосовой чат</li>
                                 </ul>
-                                <a href="https://t.me/ROBLOXRUBYPASS" target="_blank" className="w-full flex items-center justify-center py-4 bg-[#24A1DE] text-white rounded-xl font-bold hover:bg-[#2095cf] transition-all shadow-lg shadow-blue-400/20">Подключить SOTA VPN</a>
+                                <a href="https://t.me/ROBLOXRUBYPASS" target="_blank" className="w-full flex items-center justify-center py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-bold hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg shadow-blue-500/25">Подключить SOTA VPN</a>
                             </div>
 
                             {/* HITVPN */}
-                            <div className="bg-white border border-slate-200 rounded-[32px] p-8 shadow-xl shadow-slate-200/50 hover:shadow-2xl transition-all group hover:-translate-y-1">
+                            <div className="bg-slate-900/40 backdrop-blur-sm border border-slate-800 rounded-[32px] p-8 shadow-xl shadow-black/20 hover:shadow-2xl hover:shadow-purple-500/10 hover:border-slate-700 transition-all group hover:-translate-y-1">
                                 <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-4xl shadow-sm">⚡</div>
+                                    <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center text-4xl shadow-inner border border-purple-500/20">⚡</div>
                                     <div>
-                                        <h3 className="text-2xl font-black text-slate-900">HITVPN</h3>
-                                        <p className="text-slate-500 font-medium">Стабильность</p>
+                                        <h3 className="text-2xl font-black text-slate-100">HITVPN</h3>
+                                        <p className="text-slate-400 font-medium text-sm">Стабильность</p>
                                     </div>
                                 </div>
-                                <ul className="space-y-3 mb-8 text-slate-600 font-medium">
-                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Простая настройка</li>
-                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Высокая надежность</li>
-                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Поддержка 24/7</li>
+                                <ul className="space-y-3 mb-8 text-slate-400 font-medium">
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Простая настройка</li>
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Высокая надежность</li>
+                                    <li className="flex items-center gap-2"><svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Поддержка 24/7</li>
                                 </ul>
-                                <a href="https://t.me/ROBLOXRUBYPASS" target="_blank" className="w-full flex items-center justify-center py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20">Подключить HITVPN</a>
+                                <a href="https://t.me/ROBLOXRUBYPASS" target="_blank" className="w-full flex items-center justify-center py-4 bg-slate-800 text-white rounded-xl font-bold hover:bg-slate-700 transition-all shadow-lg shadow-black/30 border border-slate-700">Подключить HITVPN</a>
                             </div>
                         </div>
                     </div>
@@ -438,28 +475,28 @@ export default function HomePage() {
                 {activeTab === 'faq' && (
                     <div className="space-y-12 animate-in">
                         <div className="text-center mb-16">
-                            <span className="px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold uppercase tracking-widest border border-emerald-100 mb-6 inline-block">FAQ & Support</span>
-                            <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">Частые вопросы</h1>
-                            <p className="text-slate-500 max-w-xl mx-auto text-lg leading-relaxed">Ответы на самые популярные вопросы сообщества о безопасности и настройке.</p>
+                            <span className="px-4 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6 inline-block">FAQ & Support</span>
+                            <h1 className="text-4xl md:text-5xl font-black text-slate-100 mb-6 tracking-tight">Частые вопросы</h1>
+                            <p className="text-slate-400 max-w-xl mx-auto text-lg leading-relaxed">Ответы на самые популярные вопросы сообщества о безопасности и настройке.</p>
                         </div>
 
                         <div className="max-w-3xl mx-auto space-y-6">
-                            <div className="bg-white rounded-[32px] p-8 border border-slate-200 shadow-xl shadow-slate-200/40">
+                            <div className="bg-slate-900/40 backdrop-blur-sm rounded-[32px] p-8 border border-slate-800 shadow-xl shadow-black/20 hover:border-slate-700 transition-colors">
                                 <div className="flex items-start gap-5">
-                                    <div className="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center flex-shrink-0 text-red-600">
+                                    <div className="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center flex-shrink-0 text-red-500 border border-red-500/20">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                                     </div>
                                     <div className="space-y-4">
-                                        <h3 className="text-xl font-black text-slate-900">Zapret это вирус?</h3>
-                                        <div className="prose prose-slate text-slate-500 leading-relaxed text-sm md:text-base">
-                                            <p className="font-bold text-slate-800 mb-2">Краткий ответ: Нет.</p>
+                                        <h3 className="text-xl font-black text-slate-100">Zapret это вирус?</h3>
+                                        <div className="prose prose-slate text-slate-400 leading-relaxed text-sm md:text-base">
+                                            <p className="font-bold text-slate-200 mb-2">Краткий ответ: Нет.</p>
                                             <p>Zapret — это программное обеспечение с открытым исходным кодом, которое работает с сетевым драйвером для модификации пакетов (DPI Bypass). Из-за того, что программа "вмешивается" в интернет-трафик, многие антивирусы ошибочно принимают её за угрозу.</p>
-                                            <ul className="list-disc list-inside mt-2 space-y-1 bg-slate-50 p-4 rounded-2xl">
+                                            <ul className="list-disc list-inside mt-2 space-y-2 bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
                                                 <li>Это называется <b>False Positive</b> (ложное срабатывание).</li>
                                                 <li>Исходный код полностью открыт на GitHub, его проверяют тысячи людей.</li>
                                                 <li>Программа не крадет пароли и не майнит криптовалюту.</li>
                                             </ul>
-                                            <p className="mt-3 text-xs font-bold uppercase tracking-widest text-slate-400">Совет: Добавьте папку с программой в исключения антивируса.</p>
+                                            <p className="mt-3 text-xs font-bold uppercase tracking-widest text-slate-500">Совет: Добавьте папку с программой в исключения антивируса.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -475,33 +512,33 @@ export default function HomePage() {
             </main>
 
             {/* Footer */}
-            <footer className="w-full border-t border-slate-200 bg-white py-16 px-6">
+            <footer className="w-full border-t border-slate-800/50 bg-[#09090b]/80 backdrop-blur-xl py-16 px-6 mt-auto">
                 <div className="container mx-auto max-w-4xl">
                     <div className="flex flex-col items-center">
-                        <div className="w-12 h-1.5 bg-slate-100 rounded-full mb-10" />
+                        <div className="w-12 h-1.5 bg-slate-800 rounded-full mb-10" />
                         <div className="flex flex-wrap justify-center gap-4 mb-12">
                             <button
                                 onClick={navigateToDisclaimer}
-                                className="px-8 py-3 rounded-2xl border border-slate-200 text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] hover:bg-slate-50 hover:text-slate-900 transition-all"
+                                className="px-8 py-3 rounded-2xl border border-slate-700 text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] hover:bg-slate-800 hover:text-slate-200 transition-all shadow-sm"
                             >
                                 Отказ от ответственности
                             </button>
                             <button
                                 onClick={navigateToSupport}
-                                className="px-8 py-3 rounded-2xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.2em] hover:bg-red-600 transition-all shadow-xl shadow-slate-200"
+                                className="px-8 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-[10px] font-black uppercase tracking-[0.2em] hover:from-purple-500 hover:to-indigo-500 transition-all shadow-lg shadow-purple-500/25 border border-purple-500/30"
                             >
                                 Сотрудничество / Поддержка
                             </button>
                         </div>
-                        <div className="flex flex-col md:flex-row items-center gap-6 text-xs font-bold text-slate-400">
+                        <div className="flex flex-col md:flex-row items-center gap-6 text-xs font-bold text-slate-500">
                             <div className="flex items-center gap-2">
                                 <span>© {new Date().getFullYear()} Bypass Hub</span>
-                                <span className="w-1 h-1 bg-slate-200 rounded-full" />
-                                <span>Created by <span className="text-red-500">BADAZZRED</span></span>
+                                <span className="w-1 h-1 bg-slate-700 rounded-full" />
+                                <span>Created by <span className="text-purple-400 hover:text-purple-300 transition-colors cursor-pointer text-shadow-sm">BADAZZRED</span></span>
                             </div>
-                            <div className="hidden md:block w-1 h-1 bg-slate-200 rounded-full" />
+                            <div className="hidden md:block w-1 h-1 bg-slate-700 rounded-full" />
                             <div className="flex items-center gap-2">
-                                <span className="text-slate-300">Вдохновлено сообществом</span>
+                                <span className="text-slate-400">Вдохновлено сообществом</span>
                             </div>
                         </div>
                     </div>

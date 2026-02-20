@@ -114,7 +114,7 @@ export const VideoPlayer: React.FC = () => {
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className={`w-full aspect-video bg-black shadow-2xl relative group transition-all ${isFullscreen ? 'rounded-none border-none' : 'rounded-[32px] border border-slate-200 overflow-hidden'}`}
+      className={`w-full aspect-video bg-black shadow-2xl relative group transition-all ${isFullscreen ? 'rounded-none border-none' : 'rounded-[32px] border border-slate-800 overflow-hidden shadow-purple-500/5'}`}
     >
       {/* Video Element */}
       <video
@@ -132,11 +132,11 @@ export const VideoPlayer: React.FC = () => {
       <div className={`absolute top-0 left-0 right-0 p-6 flex justify-between items-start transition-opacity duration-300 pointer-events-none ${showControls ? 'opacity-100' : 'opacity-0'}`}>
         <div className="flex flex-col gap-2 pointer-events-auto">
           <div className="flex items-center gap-3 bg-black/40 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/10 w-fit">
-            <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+            <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_rgba(168,85,247,0.8)]" />
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white">BADAZZREDSTUDIO</span>
           </div>
           <div className="text-[10px] text-white/70 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/5 w-fit">
-            видеоматериал взят с <a href="https://t.me/robloxzapret" target="_blank" rel="noreferrer" className="text-blue-400 hover:text-blue-300 underline">https://t.me/robloxzapret</a>
+            видеоматериал взят с <a href="https://t.me/robloxzapret" target="_blank" rel="noreferrer" className="text-purple-400 hover:text-purple-300 underline">https://t.me/robloxzapret</a>
           </div>
         </div>
       </div>
@@ -156,10 +156,10 @@ export const VideoPlayer: React.FC = () => {
           />
           <div className="w-full bg-white/20 h-1 rounded-full overflow-hidden">
             <div
-              className="bg-red-500 h-full rounded-full relative"
+              className="bg-purple-500 h-full rounded-full relative shadow-[0_0_10px_rgba(168,85,247,0.5)]"
               style={{ width: `${progress}%` }}
             >
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full scale-0 group-hover/progress:scale-100 transition-transform shadow-lg shadow-red-500/50" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full scale-0 group-hover/progress:scale-100 transition-transform shadow-lg shadow-purple-500/50" />
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@ export const VideoPlayer: React.FC = () => {
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 sm:gap-6">
             {/* Play Button */}
-            <button onClick={togglePlay} className="text-white hover:text-red-500 transition-colors focus:outline-none focus:ring-0 outline-none p-2 rounded-full hover:bg-white/10">
+            <button onClick={togglePlay} className="text-white hover:text-purple-400 transition-colors focus:outline-none focus:ring-0 outline-none p-2 rounded-full hover:bg-white/10">
               {isPlaying ? (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
               ) : (
@@ -177,7 +177,7 @@ export const VideoPlayer: React.FC = () => {
 
             {/* Volume Control */}
             <div className="flex items-center gap-2 group/volume">
-              <button onClick={toggleMute} className="text-white hover:text-red-500 transition-colors focus:outline-none focus:ring-0 outline-none p-2 rounded-full hover:bg-white/10">
+              <button onClick={toggleMute} className="text-white hover:text-purple-400 transition-colors focus:outline-none focus:ring-0 outline-none p-2 rounded-full hover:bg-white/10">
                 {isMuted || volume === 0 ? (
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" /></svg>
                 ) : (
@@ -213,7 +213,7 @@ export const VideoPlayer: React.FC = () => {
 
           <div className="flex items-center gap-4">
             {/* Fullscreen Button */}
-            <button onClick={toggleFullscreen} className="text-white hover:text-red-500 transition-colors focus:outline-none focus:ring-0 outline-none p-2 rounded-full hover:bg-white/10">
+            <button onClick={toggleFullscreen} className="text-white hover:text-purple-400 transition-colors focus:outline-none focus:ring-0 outline-none p-2 rounded-full hover:bg-white/10">
               {isFullscreen ? (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 9L4 4m0 0l5 0m-5 0l0 5m5 6l-5 5m0 0h5m-5 0v-5m11-11l5 5m0 0v-5m0 5h-5m-6 11l5-5m0 0h-5m5 0v5" /></svg>
               ) : (

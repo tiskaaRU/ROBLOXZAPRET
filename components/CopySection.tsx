@@ -18,9 +18,9 @@ export const CopySection: React.FC = () => {
         <textarea
           readOnly
           value={ROBLOX_DOMAINS}
-          className="w-full h-56 bg-slate-50 border border-slate-200 rounded-2xl p-5 text-sm font-mono text-slate-600 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500/50 resize-none overflow-y-auto"
+          className="w-full h-56 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-5 text-sm font-mono text-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500/50 resize-none overflow-y-auto"
         />
-        <div className="absolute bottom-2 right-2 flex items-center gap-2 pointer-events-none opacity-50 text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1 bg-white rounded-lg border border-slate-100">
+        <div className="absolute bottom-2 right-2 flex items-center gap-2 pointer-events-none opacity-50 text-[10px] font-bold uppercase tracking-wider text-slate-500 px-3 py-1 bg-slate-900 rounded-lg border border-slate-800">
           Domains List
         </div>
       </div>
@@ -28,8 +28,8 @@ export const CopySection: React.FC = () => {
       <button
         onClick={handleCopy}
         className={`w-full py-4 px-6 rounded-2xl font-bold transition-all flex items-center justify-center gap-3 border shadow-sm ${copied
-            ? 'bg-green-50 border-green-200 text-green-600'
-            : 'bg-slate-900 border-slate-800 text-white hover:bg-slate-800 active:scale-[0.98]'
+          ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+          : 'bg-slate-800 border-slate-700 text-slate-200 hover:bg-slate-700 active:scale-[0.98]'
           }`}
       >
         {copied ? (
