@@ -248,7 +248,7 @@ export default function HomePage() {
                         {/* Action Buttons */}
                         <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-end">
                             <a
-                                href="https://t.me/ROBLOXRUBYPASS"
+                                href="https://t.me/sota?start=806639075"
                                 target="_blank"
                                 className="hidden md:flex items-center gap-2 px-4 py-2 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 rounded-xl font-bold text-xs transition-all shadow-lg active:scale-95 group border border-yellow-500/20 relative overflow-hidden"
                             >
@@ -317,7 +317,7 @@ export default function HomePage() {
 
                 {/* SOTA VPN Banner */}
                 <div className="mb-12 p-[1px] rounded-[32px] bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 shadow-xl shadow-yellow-500/10 hover:shadow-2xl hover:shadow-yellow-500/20 transition-all group overflow-hidden animate-in fade-in slide-in-from-top-4 duration-700 delay-100">
-                    <a href="https://t.me/ROBLOXRUBYPASS" target="_blank" rel="noopener noreferrer" className="block relative bg-slate-900 rounded-[31px] overflow-hidden">
+                    <a href="https://t.me/sota?start=806639075" target="_blank" rel="noopener noreferrer" className="block relative bg-slate-900 rounded-[31px] overflow-hidden">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
                         <div className="flex flex-col sm:flex-row items-center justify-between p-6 sm:p-8 gap-6 relative z-10">
                             <div className="flex-1 space-y-3 text-center sm:text-left">
