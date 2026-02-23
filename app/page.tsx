@@ -315,6 +315,36 @@ export default function HomePage() {
                     </a>
                 </div>
 
+                {/* SOTA VPN Banner */}
+                <div className="mb-12 p-[1px] rounded-[32px] bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 shadow-xl shadow-yellow-500/10 hover:shadow-2xl hover:shadow-yellow-500/20 transition-all group overflow-hidden animate-in fade-in slide-in-from-top-4 duration-700 delay-100">
+                    <a href="https://t.me/ROBLOXRUBYPASS" target="_blank" rel="noopener noreferrer" className="block relative bg-slate-900 rounded-[31px] overflow-hidden">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
+                        <div className="flex flex-col sm:flex-row items-center justify-between p-6 sm:p-8 gap-6 relative z-10">
+                            <div className="flex-1 space-y-3 text-center sm:text-left">
+                                <div className="inline-flex items-center justify-center sm:justify-start gap-2 px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 text-[10px] font-bold uppercase tracking-widest border border-yellow-500/20">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
+                                    </span>
+                                    Лучший VPN
+                                </div>
+                                <h3 className="text-xl md:text-2xl font-black text-slate-100 leading-tight">
+                                    Используйте <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">SOTA VPN</span> для Roblox
+                                </h3>
+                                <p className="text-yellow-400/90 font-bold text-sm sm:text-base">🚀 Лучший VPN сервис с высокой скоростью и низкой задержкой!</p>
+                            </div>
+                            <div className="flex items-center justify-center sm:justify-end shrink-0">
+                                <div className="px-6 py-3 bg-yellow-500 text-slate-950 font-black rounded-2xl shadow-lg group-hover:scale-105 transition-transform duration-300 flex items-center gap-2">
+                                    Подключиться
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
                 {/* PC ZAPRET TAB */}
                 {activeTab === 'zapret' && (
                     <div className="space-y-12 animate-in">
