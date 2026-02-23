@@ -285,6 +285,31 @@ export default function HomePage() {
             */}
 
             <main className="flex-grow container mx-auto max-w-3xl px-6 py-12 md:py-20">
+                {/* T-Bank Banner */}
+                <div className="mb-12 p-[1px] rounded-[32px] bg-gradient-to-r from-yellow-400 to-amber-600 shadow-xl shadow-yellow-500/10 hover:shadow-2xl hover:shadow-yellow-500/20 transition-all group overflow-hidden animate-in fade-in slide-in-from-top-4 duration-700">
+                    <a href="https://tbank.ru/baf/3aQbEHTLApg" target="_blank" rel="noopener noreferrer" className="block relative bg-slate-900 rounded-[31px] overflow-hidden">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
+                        <div className="flex flex-col sm:flex-row items-center justify-between p-6 sm:p-8 gap-6 relative z-10">
+                            <div className="flex-1 space-y-3 text-center sm:text-left">
+                                <div className="inline-flex items-center justify-center sm:justify-start gap-2 px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 text-[10px] font-bold uppercase tracking-widest border border-yellow-500/20">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
+                                    </span>
+                                    Реклама
+                                </div>
+                                <h3 className="text-xl md:text-2xl font-black text-slate-100 leading-tight">
+                                    Оформите дебетовую карту <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">Т-Банк</span>
+                                </h3>
+                                <p className="text-yellow-400/90 font-bold text-sm sm:text-base">🎁 И получите 500 ₽ на счет!</p>
+                            </div>
+                            <div className="relative w-full sm:w-[200px] md:w-[240px] aspect-[16/9] rounded-2xl overflow-hidden shadow-inner border border-white/10 shrink-0">
+                                <img src="/Screenshot_1.png" alt="Т-Банк Баннер" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
                 {/* PC ZAPRET TAB */}
                 {activeTab === 'zapret' && (
                     <div className="space-y-12 animate-in">
