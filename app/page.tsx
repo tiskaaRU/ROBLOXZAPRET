@@ -250,8 +250,13 @@ export default function HomePage() {
                             <a
                                 href="https://t.me/ROBLOXRUBYPASS"
                                 target="_blank"
-                                className="hidden md:flex items-center gap-2 px-4 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 rounded-xl font-bold text-xs transition-all shadow-lg active:scale-95 group border border-indigo-500/20"
+                                className="hidden md:flex items-center gap-2 px-4 py-2 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 rounded-xl font-bold text-xs transition-all shadow-lg active:scale-95 group border border-yellow-500/20 relative overflow-hidden"
                             >
+                                <span className="absolute inset-0 bg-yellow-500/5 animate-pulse"></span>
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
+                                </span>
                                 <span>SOTA VPN</span>
                             </a>
                             <a
