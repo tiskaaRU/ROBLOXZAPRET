@@ -73,8 +73,8 @@ translations.roblox.com
 twostepverification.roblox.com
 usermoderation.roblox.com`;
 
-export const DOWNLOAD_LINK = "https://github.com/Flowseal/zapret-discord-youtube/releases/download/1.9.6/zapret-discord-youtube-1.9.6.rar";
-export const ROBLOX_VN_APK = "https://apkpure.net/roblox-vng-2025/com.roblox.client.vnggames";
+export const DOWNLOAD_LINK = "https://go.linkify.ru/2GOE";
+export const ROBLOX_VN_APK = "https://go.linkify.ru/2GOF";
 export const ROBLOX_SETTINGS = "https://www.roblox.com/my/account#!/info";
 export const SOTA_VPN_TG = "https://t.me/sota?start=806639075";
 export const BYEBYEDPI_GITHUB = "https://github.com/romanvht/ByeDPIAndroid/releases/latest";
