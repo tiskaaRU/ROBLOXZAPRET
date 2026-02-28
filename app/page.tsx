@@ -373,7 +373,7 @@ export default function HomePage() {
                         </div>
 
                         <div className="space-y-8">
-                            <StepCard number={1} title="Подготовка ПО" description="Загрузите архив Zapret (v1.9.6). Это универсальное решение для обхода региональных ограничений.">
+                            <StepCard number={1} title="Подготовка ПО" description="Загрузите архив Zapret (v1.9.7). Это универсальное решение для обхода региональных ограничений.">
                                 <a href={DOWNLOAD_LINK} className="inline-flex items-center justify-center px-10 py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-bold transition-all shadow-xl shadow-red-600/25">Скачать Zapret v1.9.7</a>
                             </StepCard>
                             <StepCard number={2} title="Конфигурация доменов" description="В папке 'lists' откройте 'list-general.txt'. Замените всё содержимое или добавьте в конец следующий список.">
