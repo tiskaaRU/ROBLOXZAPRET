@@ -31,12 +31,12 @@ const CopySnippet = ({ text }: { text: string }) => {
     };
     return (
         <div className="relative mt-2">
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-[11px] text-slate-500 break-all leading-relaxed pr-12">
+            <div className="bg-slate-800/60 border border-slate-700 rounded-xl p-4 font-mono text-[11px] text-slate-300 break-all leading-relaxed pr-12">
                 {text}
             </div>
             <button
                 onClick={handle}
-                className="absolute top-2 right-2 p-2 bg-white border border-slate-200 rounded-lg shadow-sm hover:bg-slate-50 text-slate-400 hover:text-red-500 transition-all"
+                className="absolute top-2 right-2 p-2 bg-slate-700 border border-slate-600 rounded-lg shadow-sm hover:bg-slate-600 text-slate-400 hover:text-purple-400 transition-all"
             >
                 {copied ? (
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
@@ -212,8 +212,8 @@ export default function HomePage() {
                         </div>
 
                         {/* Navigation Tabs */}
-                        <div className="w-full md:w-auto overflow-x-auto pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 no-scrollbar touch-pan-x">
-                            <div className="flex items-center gap-1 p-1.5 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl w-max md:w-auto mx-auto min-w-full md:min-w-0 justify-between md:justify-center">
+                        <div className="w-full md:w-auto overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 no-scrollbar touch-pan-x">
+                            <div className="flex items-center gap-1.5 p-1.5 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl w-max mx-auto">
                                 {[
                                     { id: 'zapret', label: 'Zapret (ПК)' },
                                     { id: 'voice', label: 'Voice & Chat' },
@@ -226,9 +226,9 @@ export default function HomePage() {
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id as TabType)}
                                         className={`
-                                            relative px-3 md:px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 whitespace-nowrap flex-1 md:flex-none text-center
+                                            relative px-3.5 md:px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 whitespace-nowrap text-center
                                             ${activeTab === tab.id
-                                                ? 'bg-slate-800 text-white shadow-lg text-shadow-sm transform scale-100 ring-1 ring-slate-700'
+                                                ? 'bg-slate-800 text-white shadow-lg ring-1 ring-slate-700'
                                                 : tab.id === 'vpn' ? 'text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 hover:text-indigo-300' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
                                             }
                                         `}
@@ -290,6 +290,20 @@ export default function HomePage() {
             */}
 
             <main className="flex-grow container mx-auto max-w-3xl px-6 py-12 md:py-20">
+                {/* Mobile bypass warning — main page */}
+                <div className="bg-orange-500/10 border border-orange-500/30 rounded-3xl p-5 md:p-6 mb-8 shadow-lg shadow-orange-500/5 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-orange-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                    <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4">
+                        <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center text-orange-400 shrink-0 border border-orange-500/30">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        </div>
+                        <div className="flex-1 text-center sm:text-left">
+                            <h3 className="text-base font-black text-orange-400 mb-1">⚠️ Обход на телефонах может не работать</h3>
+                            <p className="text-slate-400 text-xs md:text-sm leading-relaxed">ByeByeDPI и другие DPI-методы сейчас блокируются. Рекомендуем <a href={SOTA_VPN_TG} target="_blank" className="text-yellow-400 font-bold hover:text-yellow-300 underline underline-offset-2 decoration-yellow-500/30">SOTA VPN</a> и следите за обновлениями в <a href="https://t.me/ROBLOXRUBYPASS" target="_blank" className="text-indigo-400 font-bold hover:text-indigo-300 underline underline-offset-2 decoration-indigo-500/30">@ROBLOXRUBYPASS</a></p>
+                        </div>
+                    </div>
+                </div>
+
                 {/* T-Bank Banner */}
                 <div className="mb-12 p-[1px] rounded-[32px] bg-gradient-to-r from-yellow-400 to-amber-600 shadow-xl shadow-yellow-500/10 hover:shadow-2xl hover:shadow-yellow-500/20 transition-all group overflow-hidden animate-in fade-in slide-in-from-top-4 duration-700">
                     <a href="https://tbank.ru/baf/3aQbEHTLApg" target="_blank" rel="noopener noreferrer" className="block relative bg-slate-900 rounded-[31px] overflow-hidden">
@@ -360,7 +374,7 @@ export default function HomePage() {
 
                         <div className="space-y-8">
                             <StepCard number={1} title="Подготовка ПО" description="Загрузите архив Zapret (v1.9.6). Это универсальное решение для обхода региональных ограничений.">
-                                <a href={DOWNLOAD_LINK} className="inline-flex items-center justify-center px-10 py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-bold transition-all shadow-xl shadow-red-600/25">Скачать Zapret v1.9.6</a>
+                                <a href={DOWNLOAD_LINK} className="inline-flex items-center justify-center px-10 py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-bold transition-all shadow-xl shadow-red-600/25">Скачать Zapret v1.9.7</a>
                             </StepCard>
                             <StepCard number={2} title="Конфигурация доменов" description="В папке 'lists' откройте 'list-general.txt'. Замените всё содержимое или добавьте в конец следующий список.">
                                 <CopySection />
@@ -466,7 +480,7 @@ export default function HomePage() {
                             </div>
                         </div>
 
-                        <div className="relative overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-700 rounded-[40px] p-10 text-white shadow-2xl shadow-purple-200 mb-12">
+                        <div className="relative overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-700 rounded-[40px] p-10 text-white shadow-2xl shadow-purple-500/20 mb-12">
                             <div className="relative z-10">
                                 <div className="flex items-center gap-4 mb-8">
                                     <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30">
