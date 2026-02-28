@@ -431,10 +431,39 @@ export default function HomePage() {
                 {/* MOBILE TAB */}
                 {activeTab === 'mobile' && (
                     <div className="space-y-12 animate-in">
-                        <div className="text-center mb-16">
+                        <div className="text-center mb-10">
                             <span className="px-4 py-1.5 rounded-full bg-purple-500/10 text-purple-400 text-xs font-bold uppercase tracking-widest border border-purple-500/20 mb-6 inline-block">Android Bypass</span>
-                            <h1 className="text-4xl md:text-5xl font-black text-slate-100 mb-6 tracking-tight">ByeByeDPI Mobile</h1>
-                            <p className="text-slate-400 max-w-xl mx-auto text-lg leading-relaxed">Инструкция по настройке приложения ByeByeDPI и системного DNS для Android устройств.</p>
+                            <h1 className="text-4xl md:text-5xl font-black text-slate-100 mb-6 tracking-tight">Обход на Телефонах</h1>
+                            <p className="text-slate-400 max-w-xl mx-auto text-lg leading-relaxed">Инструкция по настройке обхода блокировок для мобильных устройств.</p>
+                        </div>
+
+                        {/* WARNING BLOCK */}
+                        <div className="bg-orange-500/10 border border-orange-500/30 rounded-3xl p-6 md:p-8 mb-12 shadow-xl shadow-orange-500/5 relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                            <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6">
+                                <div className="w-16 h-16 bg-orange-500/20 rounded-2xl flex items-center justify-center text-orange-400 shrink-0 border border-orange-500/30 shadow-inner">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                </div>
+                                <div className="flex-1 text-center md:text-left space-y-4">
+                                    <h3 className="text-xl md:text-2xl font-black text-orange-400 tracking-tight">Внимание: блокировки на телефонах</h3>
+                                    <p className="text-slate-300 font-medium leading-relaxed text-sm md:text-base">
+                                        В настоящее время методы вроде <strong>ByeByeDPI</strong> и другие приложения для подмены пакетов <span className="text-white font-bold bg-white/10 px-1 rounded">могут не работать</span> на мобильных сетях из-за ужесточения блокировок (ТСПУ).
+                                    </p>
+                                    <div className="bg-black/40 rounded-2xl p-5 border border-black/20 shadow-inner">
+                                        <p className="text-orange-200 text-sm md:text-base font-bold mb-4 flex items-start gap-2">
+                                            <span className="text-xl">✅</span>
+                                            Пока единственный гарантированно рабочий и актуальный способ для смартфонов — использовать стабильный VPN.
+                                        </p>
+                                        <a href={SOTA_VPN_TG} target="_blank" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-slate-900 rounded-xl font-black text-sm transition-all shadow-lg active:scale-95 group">
+                                            Мы рекомендуем SOTA VPN
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                                        </a>
+                                    </div>
+                                    <p className="text-slate-400 text-xs md:text-sm font-medium">
+                                        Следите за самыми свежими обновлениями и рабочими методами обхода в нашем Telegram-канале: <a href="https://t.me/ROBLOXRUBYPASS" target="_blank" className="text-indigo-400 hover:text-indigo-300 font-bold underline decoration-indigo-500/30 underline-offset-4 transition-colors">@ROBLOXRUBYPASS</a>.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="relative overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-700 rounded-[40px] p-10 text-white shadow-2xl shadow-purple-200 mb-12">
