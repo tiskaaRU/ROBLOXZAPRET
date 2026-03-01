@@ -197,56 +197,76 @@ export default function HomePage() {
             {/* Sticky Navigation */}
             <nav className="sticky top-0 z-50 glass-nav">
                 <div className="container mx-auto max-w-7xl px-4 py-3 md:py-4">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
-                        {/* Logo & Brand */}
-                        <div className="flex items-center gap-3 cursor-pointer group" onClick={navigateToMain}>
-                            <div className="relative w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:scale-105 transition-all duration-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                                </svg>
-                                <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="flex flex-col lg:flex-row items-center justify-between gap-5 lg:gap-6">
+                        {/* Top Row for Mobile & Tablet (Logo + Telegram Action) */}
+                        <div className="flex items-center justify-between w-full lg:w-auto shrink-0">
+                            {/* Logo & Brand */}
+                            <div className="flex items-center gap-3 cursor-pointer group" onClick={navigateToMain}>
+                                <div className="relative w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:scale-105 transition-all duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                                    </svg>
+                                    <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                                </div>
+                                <span className="text-xl font-extrabold tracking-tight text-slate-100 group-hover:text-purple-400 transition-colors whitespace-nowrap">
+                                    Bypass <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">Hub</span>
+                                </span>
                             </div>
-                            <span className="text-xl font-extrabold tracking-tight text-slate-100 group-hover:text-purple-400 transition-colors">
-                                Roblox Bypass <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">Hub</span>
-                            </span>
-                        </div>
 
-                        {/* Navigation Tabs */}
-                        <div className="w-full md:w-auto overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 no-scrollbar touch-pan-x">
-                            <div className="flex items-center gap-1.5 p-1.5 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl w-max mx-auto">
-                                {[
-                                    { id: 'zapret', label: 'Zapret (ПК)' },
-                                    { id: 'voice', label: 'Voice & Chat' },
-                                    { id: 'mobile', label: 'Mobile' },
-                                    { id: 'vpn', label: 'VPN 🔥' },
-                                    { id: 'faq', label: 'FAQ' },
-                                    { id: 'versions', label: 'Версии' }
-                                ].map(tab => (
-                                    <button
-                                        key={tab.id}
-                                        onClick={() => setActiveTab(tab.id as TabType)}
-                                        className={`
-                                            relative px-3.5 md:px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 whitespace-nowrap text-center
-                                            ${activeTab === tab.id
-                                                ? 'bg-slate-800 text-white shadow-lg ring-1 ring-slate-700'
-                                                : tab.id === 'vpn' ? 'text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 hover:text-indigo-300' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-                                            }
-                                        `}
-                                    >
-                                        {tab.id === 'vpn' && (
-                                            <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-500"></span>
-                                            </span>
-                                        )}
-                                        {tab.label}
-                                    </button>
-                                ))}
+                            {/* Mobile/Tablet Telegram Button (Hidden on Desktop) */}
+                            <div className="flex lg:hidden items-center gap-3">
+                                <a
+                                    href="https://t.me/ROBLOXRUBYPASS"
+                                    target="_blank"
+                                    className="flex items-center justify-center w-10 h-10 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl transition-all shadow-lg shadow-indigo-500/25 active:scale-95"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.48-.94-2.4-1.54-1.06-.7-.37-1.09.23-1.72.15-.16 2.8-2.57 2.85-2.78.01-.03.01-.13-.06-.18-.07-.05-.17-.03-.25-.02-.11.02-1.91 1.2-5.39 3.57-.51.35-.96.52-1.37.51-.45-.01-1.33-.26-1.98-.47-.8-.26-1.43-.4-1.37-.84.03-.22.32-.44.89-.67 3.5-1.52 5.83-2.53 7-3.02 3.33-1.39 4.02-1.63 4.47-1.64.1-.01.32.02.47.14.12.1.15.24.17.34.01.12.01.27.01.4z" /></svg>
+                                </a>
                             </div>
                         </div>
 
-                        {/* Action Buttons */}
-                        <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-end">
+                        {/* Navigation Tabs (Scrollable area) */}
+                        <div className="w-full lg:flex-1 overflow-x-auto no-scrollbar touch-pan-x -mx-4 px-4 lg:-mx-0 lg:px-0">
+                            {/* Inner runway flex preserves right padding when scrolling to the end */}
+                            <div className="flex w-max mx-auto px-0.5 pb-1 lg:pb-0 relative after:content-[''] after:w-4 after:shrink-0 lg:after:w-0">
+                                <div className="flex items-center gap-1.5 p-1.5 bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-2xl shrink-0 shadow-inner">
+                                    {[
+                                        { id: 'zapret', label: 'Zapret (ПК)' },
+                                        { id: 'voice', label: 'Voice & Chat' },
+                                        { id: 'mobile', label: 'Mobile' },
+                                        { id: 'vpn', label: 'VPN 🔥' },
+                                        { id: 'faq', label: 'FAQ' },
+                                        { id: 'versions', label: 'Версии' }
+                                    ].map(tab => (
+                                        <button
+                                            key={tab.id}
+                                            onClick={() => setActiveTab(tab.id as TabType)}
+                                            className={`
+                                                relative px-4 py-2.5 rounded-[14px] text-xs md:text-sm font-bold transition-all duration-300 whitespace-nowrap text-center overflow-hidden
+                                                ${activeTab === tab.id
+                                                    ? 'text-white shadow-lg ring-1 ring-white/10'
+                                                    : tab.id === 'vpn' ? 'text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 hover:text-indigo-300' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                                                }
+                                            `}
+                                        >
+                                            {activeTab === tab.id && (
+                                                <div className="absolute inset-0 bg-gradient-to-b from-slate-700 to-slate-800 -z-10" />
+                                            )}
+                                            {tab.id === 'vpn' && (
+                                                <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                                                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-500"></span>
+                                                </span>
+                                            )}
+                                            <span className="relative z-10">{tab.label}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Action Buttons Desktop */}
+                        <div className="flex items-center gap-3 w-full md:w-auto justify-end">
                             <a
                                 href="https://t.me/sota?start=806639075"
                                 target="_blank"
@@ -262,13 +282,12 @@ export default function HomePage() {
                             <a
                                 href="https://t.me/ROBLOXRUBYPASS"
                                 target="_blank"
-                                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl font-bold text-sm transition-all shadow-lg shadow-purple-500/25 active:scale-95 group"
+                                className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl font-bold text-sm transition-all shadow-lg shadow-purple-500/25 active:scale-95 group"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:-rotate-12 transition-transform" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.48-.94-2.4-1.54-1.06-.7-.37-1.09.23-1.72.15-.16 2.8-2.57 2.85-2.78.01-.03.01-.13-.06-.18-.07-.05-.17-.03-.25-.02-.11.02-1.91 1.2-5.39 3.57-.51.35-.96.52-1.37.51-.45-.01-1.33-.26-1.98-.47-.8-.26-1.43-.4-1.37-.84.03-.22.32-.44.89-.67 3.5-1.52 5.83-2.53 7-3.02 3.33-1.39 4.02-1.63 4.47-1.64.1-.01.32.02.47.14.12.1.15.24.17.34.01.12.01.27.01.4z" />
                                 </svg>
-                                <span className="hidden lg:inline">Подписаться</span>
-                                <span className="lg:hidden">Telegram</span>
+                                <span>Подписаться</span>
                             </a>
 
                             <button
@@ -379,7 +398,7 @@ export default function HomePage() {
                             <StepCard number={2} title="Конфигурация доменов" description="В папке 'lists' откройте 'list-general.txt'. Замените всё содержимое или добавьте в конец следующий список.">
                                 <CopySection />
                             </StepCard>
-                            <StepCard number={3} title="Системная настройка" description="Запустите service.bat от имени администратора. В окне настроек: ipset = any, включите Game Filter." />
+                            <StepCard number={3} title="Системная настройка" description="Запустите service.bat от имени админа. Выберите '4. Game Filter' -> '1. TCP and UDP'. Закройте окно. Снова запустите service.bat от имени админа. Выберите '5. Ipset Filter' -> 'any'." />
                             <StepCard number={4} title="Выбор алгоритма" description="Запустите один из файлов: general (ALT10).bat или general (SIMPLE FAKE ALT).bat. Выбирайте тот, что лучше работает у вас." />
                         </div>
                     </div>
